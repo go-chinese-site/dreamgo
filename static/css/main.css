@@ -1,0 +1,67 @@
+*{margin:0;padding:0}
+html,body{height:100%}
+body{background:#ddd;color:#666;font-size:14px;font-family:"-apple-system","Open Sans","HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,sans-serif}
+::selection,::-moz-selection,::-webkit-selection{background-color:#2479CC;color:#eee}
+h1{font-size:2em}
+h3{font-size:1.3em}
+h4{font-size:1.1em}
+a:link, a:visited, a:active {color: #076dd0; text-decoration: none; }
+a:hover {text-decoration: underline; }
+article{padding:30px 0;position:relative;overflow: hidden;}
+.container{max-width:1600px;min-height:100%;position:relative}
+.global-tips{display:none}
+.left-col{background-color:#007b8b;background-image:url(/static/image/left-bg.png);background-size:cover;height:100%;position:fixed;width:270px}
+.mid-col{background:#fff;left:0;margin-left:270px;min-height:100%;position:absolute;right:0}
+article .post-footer{color:#555;float:right;font-size:.8em;line-height:2;position:relative;text-align:right;width:auto}
+article .entry-content{font-size:16px;font-family:Arial,'Hiragino Sans GB',冬青黑,'Microsoft YaHei',微软雅黑,SimSun,宋体,Helvetica,Tahoma,'Arial sans-serif';-webkit-font-smoothing:antialiased;line-height:1.8;word-wrap:break-word}
+article .entry-content{color:#444;border-bottom:1px solid #ddd;}
+article h1.title{color:#333;font-size:2em;font-weight:300;line-height:35px;margin-bottom:25px}article .entry-content p{margin-top:15px}
+article h1.title a{color:#333;transition:color .3s}
+.mid-col .mid-col-container{padding:0 70px 0 40px;}
+article .meta .date,article .meta .comment,article .meta .tags{position:relative}
+article .entry-content a:hover{text-decoration:underline}
+article h1.title a:hover{color:#076dd0}
+#header{border-bottom:none;height:auto;line-height:30px;margin-left:50px;padding:30px 0;width:100%}
+#main-nav{margin-left:0}
+#main-nav,#sub-nav{float:none;margin-top:15px}#sub-nav{position:relative}
+#content{margin:0 auto;width:100%}
+#footer{border-top:1px solid #ddd;font-size:.9em;line-height:2.2;padding:15px 70px 15px 40px;text-align:center;width:auto}
+#header a{color:#fff;text-shadow:0 1px #666;transition:color .3s}
+#header h1{float:none;font-weight:300;font-size:30px}
+#main-nav ul li{display:block;margin-left:0;position:relative}
+#header .subtitle{color:#fff}
+#sub-nav .social{margin-bottom:10px}
+#footer .beian{color:#666}
+#header a:hover{color:#ccc}
+#header .profilepic a{background-image:url("/static/image/avatar.jpg");background-size:100% 100%;border-radius:50%;display:block;height:160px;margin:15px 0 20px -10px;width:160px}
+#sub-nav .social a{background-size:20px 20px;background-position:center center;background-repeat:no-repeat;border-radius:50%;display:inline-block;height:28px;margin:0 6px 15px;opacity:.75;transition:opacity .3s;vertical-align:middle;width:28px}
+#sub-nav .social a:hover{opacity:1;}
+#sub-nav .social a:first-of-type{margin-left:0}
+#sub-nav .social a:last-of-type{margin-right:0}
+@media screen and (max-width:1024px){
+	article{padding-bottom:15px}
+	.left-col{width:210px}
+	.mid-col{margin-left:210px}
+	.mid-col .mid-col-container{padding:0 20px}
+	#header{margin-left:30px}
+	#footer{padding:15px 20px}
+	article h1.title,article .entry-content{margin-left:0}
+}
+@media screen and (max-width:640px){
+	#header{margin-left:0;padding:20px 0;text-align:center}
+	#main-nav{margin-top:10px}
+	#main-nav ul li{display:inline;margin:0 10px;text-align:center}
+	#header .profilepic a{height:56px;left:12px;margin:0;position:absolute;top:12px;width:56px}
+	#sub-nav .social,#sub-nav .social a{margin-bottom:0}
+	article{padding:20px 0}
+	.left-col{background-image:none;position:relative;width:100%}
+	.mid-col{float:none;margin-left:0;width:100%}
+	article .meta{margin-bottom:10px;position:static;width:auto}
+	.mid-col .mid-col-container{padding:0 10px}
+	.mid-col article .meta{float:none;overflow:hidden}
+	article .meta .date,article .meta .comment,article .meta .tags{display:inline;margin-right:5px;padding-left:0}
+	article .meta .date{margin-right:30px}#footer{padding:15px 10px}
+	#sub-nav .social a{opacity:1}
+	#content #toc-container,#content #toc{float:none}
+	#content #toc{margin:0;max-width:100%}
+}

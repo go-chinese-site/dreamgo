@@ -1,0 +1,67 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{{template "title" .}} - {{.site_name}}</title>
+    <meta name="theme-color" content="#007b8b">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="{{.SiteName}}">
+    <meta name="msapplication-starturl" content="https://studygolang.com">
+    <meta name="msapplication-navbutton-color" content="#007b8b">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="{{.SiteName}}">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="logo">
+    <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/rss.html">
+    {{template "seo" .}}
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/post.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/atelier-savanna-light.min.css">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="left-col">
+            <div class="intrude-less">
+                <header id="header" class="inner">
+                    <div class="profilepic"><a href="/" aria-label="Home"></a></div>
+                    <h1><a href="/">{{.title}}</a></h1>
+                    <p class="subtitle">{{.subtitle}}</p>
+                    <nav id="main-nav">
+                        <ul>
+                            <li><a href="/"><span>首页</span></a></li>
+                            <li><a href="/archives"><span>归档</span></a></li>
+                            <li><a href="/friends"><span>友链</span></a></li>
+                            <li><a href="/about"><span>关于</span></a></li>
+                        </ul>
+                    </nav>
+                    <nav id="sub-nav">
+                        <div class="social">
+                            <a class="weibo external" rel="nofollow" href="http://weibo.com/studygolang" title="Weibo" aria-label="Weibo" target="_blank"><i class="fa fa-weibo fa-2x" aria-hidden="true"></i></a>
+                            <a class="github external" rel="nofollow" href="https://github.com/studygolang" title="github" aria-label="github" target="_blank"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>
+                        </div>
+                    </nav>
+                </header>
+            </div>
+        </div>
+        <div class="mid-col">
+            <div class="mid-col-container">
+                <div id="content" class="inner">
+                    {{template "content" .}}
+                </div>
+            </div>
+            <div style="clear:both;"></div>
+            <footer id="footer" class="inner">
+                ©&nbsp;2017&nbsp;-&nbsp;{{.SiteName}}&nbsp;Powered by&nbsp;<a href="https://github.com/go-chinese-site/dreamgo" target="_blank">DreamGo</a>
+                <div style="color: #ccc; font-size: 86%;">
+                    VERSION: {{.app.Version}}&nbsp;
+                    <span>·</span>
+                    &nbsp;{{.response_time}}
+                </div>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>
