@@ -56,7 +56,7 @@ func init() {
 	}
 
 	App.BuildDate = fileInfo.ModTime()
-	App.Copyright = fmt.Sprintf("%d studygolang.com", time.Now().Year())
+	App.Copyright = fmt.Sprintf("%d", time.Now().Year())
 }
 
 func (this *app) InitPath() {
