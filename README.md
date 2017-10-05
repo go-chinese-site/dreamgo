@@ -1,6 +1,6 @@
 # dreamgo
 
-[![Build Status](https://travis-ci.org/go-chinese-site/dreamgo.svg?branch=master)](https://travis-ci.org/go-chinese-site/cfg)
+[![Build Status](https://travis-ci.org/go-chinese-site/dreamgo.svg?branch=master)](https://travis-ci.org/go-chinese-site/dreamgo)
 
 一个新手学习用的博客系统，用 Go 语言实现自己的梦想。
 
