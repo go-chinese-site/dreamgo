@@ -34,10 +34,21 @@ func updateGitDataSource() {
 		cloneRepo(gitRepoDir)
 	}
 
+	gitFolder := gitRepoDir + ".git"
+	for {
+		if util.Exist(gitFolder) {
+			break
+		}
+
+		cloneRepo(gitRepoDir)
+	}
+
 	c := cron.New()
 
 	c.AddFunc("@daily", func() {
 		datasource.DefaultGithub.Pull(gitRepoDir)
+		datasource.DefaultGithub.GenIndexYaml()
+		datasource.DefaultGithub.GenArchiveYaml()
 	})
 
 	c.Start()

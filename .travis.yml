@@ -1,0 +1,19 @@
+language: go
+
+go:
+  - 1.6.x
+  - 1.7.x
+  - 1.8.x
+  - 1.9.x
+  - tip
+
+sudo: false
+
+install:
+  - export GOPATH=$HOME/gopath/src/github.com/go-chinese-site/dreamgo
+  - export PATH=$PATH:$HOME/gopath/src/github.com/go-chinese-site/dreamgo/bin/
+  - go get -v github.com/FiloSottile/gvt
+
+script:
+  - sh getpkg.sh
+  - sh install.sh
