@@ -1,4 +1,7 @@
 # dreamgo
+
+[![Build Status](https://travis-ci.org/go-chinese-site/dreamgo.svg?branch=master)](https://travis-ci.org/go-chinese-site/cfg)
+
 一个新手学习用的博客系统，用 Go 语言实现自己的梦想。
 
 ## 开发计划
@@ -46,6 +49,8 @@
 3. 使用一个 Web 框架，可能考虑使用 Beego，因为国内貌似用这个的比较多，满足广大 gopher 的要求, branch-beego, 还未动工
 
 ## Install
+
+要求：Go 1.8 及以上
 
 1. 本项目使用 `gvt` 作为依赖管理工具，通过 `go get github.com/polaris1119/gvt` 安装，并将 gvt 放入 $PATH 中；
 2. 下载 dreamgo 源码：`git clone https://github.com/go-chinese-site/dreamgo`，比如下载到 ~/dreamgo 中；

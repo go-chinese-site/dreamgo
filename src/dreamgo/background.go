@@ -43,6 +43,9 @@ func updateGitDataSource() {
 		cloneRepo(gitRepoDir)
 	}
 
+	datasource.DefaultGithub.GenIndexYaml()
+	datasource.DefaultGithub.GenArchiveYaml()
+
 	c := cron.New()
 
 	c.AddFunc("@daily", func() {
