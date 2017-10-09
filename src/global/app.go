@@ -50,7 +50,16 @@ func init() {
 	App.Build = Build
 	App.LaunchTime = time.Now()
 
-	fileInfo, err := os.Stat(os.Args[0])
+	binaryPath, err := exec.LookPath(os.Args[0])
+	if err != nil {
+		panic(err)
+	}
+
+	binaryPath, err = filepath.Abs(binaryPath)
+	if err != nil {
+		panic(err)
+	}
+	fileInfo, err := os.Stat(binaryPath)
 	if err != nil {
 		panic(err)
 	}
