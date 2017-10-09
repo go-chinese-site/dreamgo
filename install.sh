@@ -20,6 +20,5 @@ gofmt -w -s src
 go install dreamgo
 
 export GOPATH="$OLDGOPATH"
-export PATH="$OLDPATH"
 
 echo 'finished'
