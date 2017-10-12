@@ -1,0 +1,16 @@
+{{define "title"}}首页{{end}}
+{{define "content"}}
+	{{range .posts}}
+	<article class="post post-list" style="border-bottom: 1px solid #ddd;">
+		<h1 class="title"><a href="/post/{{.Path}}">{{.Title}}</a></h1>
+		<div class="meta">
+			<div class="date"><i class="fa fa-calendar" aria-hidden="true"></i> {{.PubTime}}</div>
+		</div>
+		<div class="entry-content" style="border-bottom: none;">
+			<p>{{.Content}}</p>
+			<p><a href="/post/{{.Path}}" class="more-link">继续阅读 »</a></p>
+		</div>
+	</article>
+	{{end}}
+	<nav class="page-navi"><div class="center"><a href="/archives">更多博文</a></div></nav>
+{{end}}
