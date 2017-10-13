@@ -9,7 +9,7 @@ fi
 
 ps -ef|grep dreamgo |grep -v grep
 if [$? -ne 0];then
-    source install.bat
+    source install.sh
     if [! -f bin/dreamgo.exe];then
      echo .........the command install fail.........
      exit 1
@@ -22,7 +22,7 @@ if [$? -ne 0];then
 else
     echo .........run kill exist process.........
     ps -ef|grep dreamgo |grep -v grep |awk '{print $2}' |xargs kill -9 >/dev/null 2>&1
-     source install.bat
+     source install.sh
     if [! -f bin/dreamgo.exe];then
      echo .........the command install fail.........
      exit 1
@@ -31,8 +31,5 @@ else
      nohup ./bin/dreamgo & >/dev/null 2>&1
      echo .........started success.........
      echo finished
+     fi
 fi
-
-
-
- 
