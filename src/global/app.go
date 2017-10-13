@@ -96,15 +96,6 @@ func (this *app) setProjectRoot() {
 
 	projectRoot := filepath.Dir(filepath.Dir(binaryPath))
 
-	cwd, err := os.Getwd()
-	if err != nil {
-		panic(err)
-	}
-
-	if projectRoot != cwd {
-		panic("must run " + curFilename + " in project root dir")
-	}
-
 	this.ProjectRoot = projectRoot + "/"
 }
 
