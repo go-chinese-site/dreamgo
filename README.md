@@ -37,7 +37,7 @@
 	- 目前已实现了如下功能：
 		1. 基于 http.ServeMux 的简单封装：route.BlogMux，方便写中间件；
 		2. 完成基于 github repo 的首页、归档、文章；
-	- 还未实现的功能：
+	- 还未实现的功能：（大家可以认领，提 issue 告知要开发哪个或加入 qq 群沟通 195831198）
 		1. tag 列表和 tag 文章列表页；
 		2. 友情链接页；
 		3. 关于页面（怎么设计？）；
@@ -52,11 +52,13 @@
 
 要求：Go 1.8 及以上
 
-1. 本项目使用 `gvt` 作为依赖管理工具，通过 `go get github.com/polaris1119/gvt` 安装，并将 gvt 放入 $PATH 中；
+**注：如果你是 Windows，请将 `.sh` 的脚本改为 `.bat`**
+
+1. 本项目使用 `gvt` 作为依赖管理工具，通过 `go get github.com/polaris1119/gvt` 安装，并将 gvt 放入 PATH 中；
 2. 下载 dreamgo 源码：`git clone https://github.com/go-chinese-site/dreamgo`，比如下载到 ~/dreamgo 中；
 3. cd ~/dreamgo，执行 ./getpkg.sh；
 4. 执行 ./install.sh
-5. 启动 dreamgo：bin/dreamgo
+5. 启动 dreamgo：bin/dreamgo 或 执行 ./run.sh
 
 通过浏览器访问：http://localhost:2017
 

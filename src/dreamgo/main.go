@@ -31,13 +31,13 @@ func init() {
 func main() {
 	flag.Parse()
 
+	global.App.InitPath()
+
 	if strings.HasPrefix(configFile, "/") {
 		config.Parse(configFile)
 	} else {
 		config.Parse(global.App.ProjectRoot + configFile)
 	}
-
-	global.App.InitPath()
 
 	go updateGitDataSource()
 
