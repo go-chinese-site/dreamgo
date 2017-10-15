@@ -10,4 +10,5 @@ func RegisterRoutes() {
 	new(PostController).RegisterRoute()
 	new(ArchiveController).RegisterRoute()
 	new(IndexController).RegisterRoute()
+	new(TagController).RegisterRoute()
 }
