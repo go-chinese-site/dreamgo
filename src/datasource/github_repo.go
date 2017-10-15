@@ -31,6 +31,7 @@ const (
 
 	IndexFile   = "index.yaml"
 	ArchiveFile = "archive.yaml"
+	TagsFile    = "tags.yaml"
 )
 
 type GithubRepo struct{}
@@ -270,4 +271,39 @@ func (self GithubRepo) parsePubTime(pubTime string) time.Time {
 	}
 
 	return time.Now()
+}
+
+func (self GithubRepo) TagList() []*model.Tag {
+	in, err := ioutil.ReadFile(global.App.ProjectRoot + PostDir + TagsFile)
+	if err != nil {
+		return nil
+	}
+	tags := make([]*model.Tag, 0)
+	err = yaml.Unmarshal(in, &tags)
+	if err != nil {
+		return nil
+	}
+
+	return tags
+}
+
+func (self GithubRepo) FindTag(tagName string) *model.Tag {
+	tags := self.TagList()
+	for _, tag := range tags {
+		if tag.Name == tagName {
+			return tag
+		}
+	}
+	return nil
+}
+
+func (self GithubRepo) PostListByTag(tagName string) []*model.Post {
+	allPost := self.PostList()
+	posts := make([]*model.Post, 0)
+	for _, post := range allPost {
+		if found, _ := util.Contain(tagName, post.Tags); found {
+			posts = append(posts, post)
+		}
+	}
+	return posts
 }
