@@ -38,7 +38,7 @@
 		1. 基于 http.ServeMux 的简单封装：route.BlogMux，方便写中间件；
 		2. 完成基于 github repo 的首页、归档、文章；
 	- 还未实现的功能：（大家可以认领，提 issue 告知要开发哪个或加入 qq 群沟通 195831198）
-		1. tag 列表和 tag 文章列表页；
+		1. tag 列表和 tag 文章列表页（tk 开发中）；
 		2. 友情链接页；
 		3. 关于页面（怎么设计？）；
 		4. 基于 mysql、mongodb 的存储实现，通过配置切换存储；
@@ -63,5 +63,10 @@
 通过浏览器访问：http://localhost:2017
 
 ![screenshot1](screenshot1.png)
+
+## 如何贡献代码
+
+1. fork，编码，pull request；
+2. 通过一次 pull request 后，会把你加入该项目的协作者中，之后就可以直接在该项目中写代码、push 了。
 
 
