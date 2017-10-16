@@ -45,6 +45,7 @@ func updateGitDataSource() {
 
 	datasource.DefaultGithub.GenIndexYaml()
 	datasource.DefaultGithub.GenArchiveYaml()
+	datasource.DefaultGithub.GenTagsYaml()
 
 	c := cron.New()
 
