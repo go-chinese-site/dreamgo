@@ -10,6 +10,7 @@ fi
 CURDIR=`pwd`
 OLDGOPATH="$GOPATH"
 export GOPATH="$CURDIR"
+export GOBIN=
 
 if [ ! -d log ]; then
 	mkdir log
@@ -20,6 +21,5 @@ gofmt -w -s src
 go install dreamgo
 
 export GOPATH="$OLDGOPATH"
-export PATH="$OLDPATH"
 
 echo 'finished'

@@ -7,11 +7,11 @@
     <title>{{template "title" .}} - {{.site_name}}</title>
     <meta name="theme-color" content="#007b8b">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="{{.SiteName}}">
+    <meta name="application-name" content="{{.site_name}}">
     <meta name="msapplication-starturl" content="https://studygolang.com">
     <meta name="msapplication-navbutton-color" content="#007b8b">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="{{.SiteName}}">
+    <meta name="apple-mobile-web-app-title" content="{{.site_name}}">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="logo">
     <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/rss.html">
@@ -54,7 +54,7 @@
             </div>
             <div style="clear:both;"></div>
             <footer id="footer" class="inner">
-                ©&nbsp;2017&nbsp;-&nbsp;{{.SiteName}}&nbsp;Powered by&nbsp;<a href="https://github.com/go-chinese-site/dreamgo" target="_blank">DreamGo</a>
+                ©&nbsp;{{.app.Copyright}}&nbsp;-&nbsp;{{.site_name}}&nbsp;Powered by&nbsp;<a href="https://github.com/go-chinese-site/dreamgo" target="_blank">DreamGo</a>
                 <div style="color: #ccc; font-size: 86%;">
                     VERSION: {{.app.Version}}&nbsp;
                     <span>·</span>
