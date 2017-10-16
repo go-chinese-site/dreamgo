@@ -177,6 +177,42 @@ func (self GithubRepo) GenArchiveYaml() {
 	ioutil.WriteFile(archiveYaml, buf, 0777)
 }
 
+func (self GithubRepo) GenTagsYaml() {
+	allPosts := self.fetchPosts()
+	tagMap := make(map[string][]*model.Post)
+	for _, post := range allPosts {
+		post.Content = ""
+		for _, tag := range post.Tags {
+			posts, ok := tagMap[tag]
+			if !ok {
+				posts = make([]*model.Post, 0)
+			}
+			posts = append(posts, post)
+			tagMap[tag] = posts
+		}
+	}
+	tags := make([]*model.Tag, 0)
+	for tag, posts := range tagMap {
+		sort.Slice(posts, func(i, j int) bool {
+			return posts[i].PubTime > posts[j].PubTime
+		})
+		tags = append(tags, &model.Tag{Name: tag, Posts: posts})
+	}
+
+	sort.Slice(tags, func(i, j int) bool {
+		return len(tags[i].Posts) > len(tags[j].Posts)
+	})
+
+	buf, err := yaml.Marshal(tags)
+	if err != nil {
+		log.Printf("gen tags yaml error:%v\n", err)
+		return
+	}
+
+	tagsYaml := global.App.ProjectRoot + PostDir + TagsFile
+	ioutil.WriteFile(tagsYaml, buf, 0777)
+}
+
 func (self GithubRepo) fetchPosts() []*model.Post {
 	var (
 		posts = make([]*model.Post, 0, 31)
@@ -295,15 +331,4 @@ func (self GithubRepo) FindTag(tagName string) *model.Tag {
 		}
 	}
 	return nil
-}
-
-func (self GithubRepo) PostListByTag(tagName string) []*model.Post {
-	allPost := self.PostList()
-	posts := make([]*model.Post, 0)
-	for _, post := range allPost {
-		if found, _ := util.Contain(tagName, post.Tags); found {
-			posts = append(posts, post)
-		}
-	}
-	return posts
 }

@@ -6,6 +6,6 @@
 package model
 
 type Tag struct {
-	Name   string
-	Detail string
+	Name  string  `yaml:"name"`
+	Posts []*Post `yaml:"posts"`
 }

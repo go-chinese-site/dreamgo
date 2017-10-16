@@ -28,8 +28,7 @@ func (TagController) Detail(w http.ResponseWriter, r *http.Request) {
 
 	tag := datasource.DefaultGithub.FindTag(tagName)
 	if tag != nil {
-		posts := datasource.DefaultGithub.PostListByTag(tagName)
-		view.Render(w, r, "tag.html", map[string]interface{}{"tag": tag, "posts": posts})
+		view.Render(w, r, "tag.html", map[string]interface{}{"tag": tag})
 	} else {
 		http.NotFound(w, r)
 	}

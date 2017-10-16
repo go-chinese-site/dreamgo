@@ -32,3 +32,9 @@ func TestGenArchiveYaml(t *testing.T) {
 
 	datasource.DefaultGithub.GenArchiveYaml()
 }
+
+func TestGenTagsYaml(t *testing.T) {
+	setup()
+
+	datasource.DefaultGithub.GenTagsYaml()
+}

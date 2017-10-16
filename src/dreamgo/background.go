@@ -52,6 +52,7 @@ func updateGitDataSource() {
 		datasource.DefaultGithub.Pull(gitRepoDir)
 		datasource.DefaultGithub.GenIndexYaml()
 		datasource.DefaultGithub.GenArchiveYaml()
+		datasource.DefaultGithub.GenTagsYaml()
 	})
 
 	c.Start()
