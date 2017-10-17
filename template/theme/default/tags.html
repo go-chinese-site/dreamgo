@@ -1,0 +1,13 @@
+{{define "title"}}标签--{{.tag.Name}}{{end}}
+{{define "content"}}
+	<article class="post post-list">
+		<h1 class="title">标签</h1>
+		<div class="entry-content" style="border-bottom: none;">
+		<ul>
+		{{range .tags}}
+			<li><a href="/tag/{{.Name}}">{{.Name}}（{{len .Posts}}）</a></li>
+		{{end}}
+		</ul>
+		</div>
+	</article>
+{{end}}

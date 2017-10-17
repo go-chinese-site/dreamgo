@@ -12,6 +12,7 @@ import (
 	"net/url"
 	"path/filepath"
 	"route"
+	"sort"
 	"view"
 )
 
@@ -20,6 +21,7 @@ type TagController struct{}
 // RegisterRoute 注册路由
 func (self TagController) RegisterRoute() {
 	route.HandleFunc("/tag/", self.Detail)
+	route.HandleFunc("/tags", self.List)
 }
 
 func (TagController) Detail(w http.ResponseWriter, r *http.Request) {
@@ -32,4 +34,12 @@ func (TagController) Detail(w http.ResponseWriter, r *http.Request) {
 	} else {
 		http.NotFound(w, r)
 	}
+}
+
+func (TagController) List(w http.ResponseWriter, r *http.Request) {
+	tags := datasource.DefaultGithub.TagList()
+	sort.Slice(tags, func(i, j int) bool {
+		return len(tags[i].Posts) > len(tags[j].Posts)
+	})
+	view.Render(w, r, "tags.html", map[string]interface{}{"tags": tags})
 }
