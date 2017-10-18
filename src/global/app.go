@@ -70,8 +70,6 @@ func init() {
 
 func (this *app) InitPath() {
 	App.setProjectRoot()
-
-	App.SetTemplateDir("default")
 }
 
 // Uptime calculates the duration of lauching
