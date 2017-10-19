@@ -28,10 +28,10 @@ func (PostController) Detail(w http.ResponseWriter, r *http.Request) {
 	filename := filepath.Base(r.RequestURI)
 	if strings.HasSuffix(filename, ".md") {
 
-		datasource.DefaultGithub.ServeMarkdown(w, r, filename)
+		datasource.DefaultDataSourcer.ServeMarkdown(w, r, filename)
 
 	} else if strings.HasSuffix(filename, ".html") {
-		post, err := datasource.DefaultGithub.FindPost(util.Filename(filename))
+		post, err := datasource.DefaultDataSourcer.FindPost(util.Filename(filename))
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return

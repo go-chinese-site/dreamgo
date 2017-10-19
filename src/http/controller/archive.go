@@ -21,7 +21,7 @@ func (self ArchiveController) RegisterRoute() {
 }
 
 func (ArchiveController) List(w http.ResponseWriter, r *http.Request) {
-	yearArchives := datasource.DefaultGithub.PostArchive()
+	yearArchives := datasource.DefaultDataSourcer.PostArchive()
 
 	view.Render(w, r, "archives.html", map[string]interface{}{"archives": yearArchives})
 }

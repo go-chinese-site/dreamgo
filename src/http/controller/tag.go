@@ -28,7 +28,7 @@ func (TagController) Detail(w http.ResponseWriter, r *http.Request) {
 	reqUrl, _ := url.ParseRequestURI(r.RequestURI)
 	tagName := filepath.Base(reqUrl.Path)
 
-	tag := datasource.DefaultGithub.FindTag(tagName)
+	tag := datasource.DefaultDataSourcer.FindTag(tagName)
 	if tag != nil {
 		view.Render(w, r, "tag.html", map[string]interface{}{"tag": tag})
 	} else {
@@ -37,7 +37,7 @@ func (TagController) Detail(w http.ResponseWriter, r *http.Request) {
 }
 
 func (TagController) List(w http.ResponseWriter, r *http.Request) {
-	tags := datasource.DefaultGithub.TagList()
+	tags := datasource.DefaultDataSourcer.TagList()
 	sort.Slice(tags, func(i, j int) bool {
 		return len(tags[i].Posts) > len(tags[j].Posts)
 	})
