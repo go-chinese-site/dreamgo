@@ -20,8 +20,10 @@ func (self ArchiveController) RegisterRoute() {
 	route.HandleFunc("/archives", self.List)
 }
 
+// List 处理归档列表请求
 func (ArchiveController) List(w http.ResponseWriter, r *http.Request) {
+	// 从数据源查询归档列表
 	yearArchives := datasource.DefaultGithub.PostArchive()
-
+	// 渲染模板archives.html，并传入数据
 	view.Render(w, r, "archives.html", map[string]interface{}{"archives": yearArchives})
 }

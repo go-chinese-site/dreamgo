@@ -24,7 +24,7 @@ func updateGitDataSource() {
 	if typ != datasource.TypeGit {
 		return
 	}
-	//检查文章目录(data/post/)是否存在,不存在则克隆远程仓库
+	// 检查文章目录(data/post/)是否存在,不存在则克隆远程仓库
 	gitRepoDir := global.App.ProjectRoot + datasource.PostDir
 	if !util.Exist(gitRepoDir) {
 		if err := os.MkdirAll(gitRepoDir, os.ModePerm); err != nil {
@@ -42,12 +42,12 @@ func updateGitDataSource() {
 
 		cloneRepo(gitRepoDir)
 	}
-	//解析仓库文件，生成首页、归档、标签数据
+	// 解析仓库文件，生成首页、归档、标签数据
 	datasource.DefaultGithub.GenIndexYaml()
 	datasource.DefaultGithub.GenArchiveYaml()
 	datasource.DefaultGithub.GenTagsYaml()
 
-	//定时每天自动更新仓库，并生成首页、归档、标签数据
+	// 定时每天自动更新仓库，并生成首页、归档、标签数据
 	c := cron.New()
 	c.AddFunc("@daily", func() {
 		datasource.DefaultGithub.Pull(gitRepoDir)

@@ -106,7 +106,7 @@ func (self GithubRepo) Pull(gitRepoDir string) error {
 // GenIndexYaml 生成首页数据文件index.yaml
 func (self GithubRepo) GenIndexYaml() {
 	posts := self.fetchPosts()
-	//首页最多显示20篇文章
+	// 首页最多显示20篇文章
 	length := 20
 	if len(posts) < length {
 		length = len(posts)
@@ -188,7 +188,7 @@ func (self GithubRepo) GenArchiveYaml() {
 func (self GithubRepo) GenTagsYaml() {
 	allPosts := self.fetchPosts()
 	tagMap := make(map[string][]*model.Post)
-	//遍历所有文章对象，分析出标签数据
+	// 遍历所有文章对象，分析出标签数据
 	for _, post := range allPosts {
 		post.Content = ""
 		for _, tag := range post.Tags {
@@ -200,7 +200,7 @@ func (self GithubRepo) GenTagsYaml() {
 			tagMap[tag] = posts
 		}
 	}
-	//组装标签列表
+	// 组装标签列表
 	tags := make([]*model.Tag, 0)
 	for tag, posts := range tagMap {
 		sort.Slice(posts, func(i, j int) bool {
@@ -208,7 +208,7 @@ func (self GithubRepo) GenTagsYaml() {
 		})
 		tags = append(tags, &model.Tag{Name: tag, Posts: posts})
 	}
-	//按文件数量倒序排序
+	// 按文件数量倒序排序
 	sort.Slice(tags, func(i, j int) bool {
 		return len(tags[i].Posts) > len(tags[j].Posts)
 	})
@@ -231,7 +231,7 @@ func (self GithubRepo) fetchPosts() []*model.Post {
 		post *model.Post
 		err  error
 	)
-	//遍历 data/post 下的目录
+	// 遍历 data/post 下的目录
 	postDir := global.App.ProjectRoot + PostDir
 	names := util.ScanDir(postDir)
 	for _, name := range names {
@@ -255,7 +255,7 @@ func (self GithubRepo) fetchPosts() []*model.Post {
 
 		posts = append(posts, post)
 	}
-	//按发布时间倒序排序
+	// 按发布时间倒序排序
 	sort.Slice(posts, func(i, j int) bool {
 		return posts[i].PubTime > posts[j].PubTime
 	})
@@ -265,12 +265,12 @@ func (self GithubRepo) fetchPosts() []*model.Post {
 
 // genOnePost 解析meta.yaml和post.md文件生成model.Post对象
 func (self GithubRepo) genOnePost(postDir, path string) (*model.Post, error) {
-	//从post.md中读取文章内容
+	// 从post.md中读取文章内容
 	markdown, err := ioutil.ReadFile(postDir + "/post.md")
 	if err != nil {
 		return nil, errors.Wrap(err, "read post.md error")
 	}
-	//从meta.yml文件读取文章信息
+	// 从meta.yml文件读取文章信息
 	var meta = &model.Meta{}
 	metaBytes, err := ioutil.ReadFile(postDir + "/meta.yml")
 	if err == nil {

@@ -25,6 +25,7 @@ var funcMap = template.FuncMap{
 	},
 }
 
+// Render 渲染模板并输出
 func Render(w http.ResponseWriter, r *http.Request, htmlFile string, data map[string]interface{}) {
 	if data == nil {
 		data = make(map[string]interface{})
@@ -34,13 +35,14 @@ func Render(w http.ResponseWriter, r *http.Request, htmlFile string, data map[st
 	data["title"] = config.YamlConfig.Get("setting.title").String()
 	data["subtitle"] = config.YamlConfig.Get("setting.subtitle").String()
 
+	// 加载布局模板layout.html
 	tpl, err := template.New("layout.html").Funcs(funcMap).
 		ParseFiles(global.App.TemplateDir+"layout.html", global.App.TemplateDir+htmlFile)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-
+	// 加载seo关键词和描述
 	if seoTpl := tpl.Lookup("seo"); seoTpl == nil {
 		seoKeywords := config.YamlConfig.Get("seo.keywords").String()
 		seoDescription := config.YamlConfig.Get("seo.description").String()
@@ -56,7 +58,7 @@ func Render(w http.ResponseWriter, r *http.Request, htmlFile string, data map[st
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	w.Header().Set("X-Content-Type-Options", "nosniff")
 	w.WriteHeader(http.StatusOK)
-
+	// 渲染模板，并输出到w
 	err = tpl.Execute(w, data)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
