@@ -1,0 +1,17 @@
+{
+    "editor.fontFamily": "dejavu sans mono",
+    "editor.fontWeight": "bold",
+    "editor.fontSize": "18",
+    "files.autoSave": "onFocusChange",
+    "go.buildOnSave": true,
+    "go.lintOnSave": true,
+    "go.vetOnSave": true,
+    "go.buildFlags": [],
+    "go.lintFlags": [],
+    "go.vetFlags": [],
+    "go.useCodeSnippetsOnFunctionSuggest": false,
+    "go.formatOnSave": false,
+    "go.formatTool": "goreturns", 
+    "go.goroot": "/home/xiangxiaohong/Softwares/go",
+    "go.gopath": "/home/xiangxiaohong/Projects/golang/src/dreamgo"
+}
