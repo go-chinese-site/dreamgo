@@ -33,8 +33,6 @@ func (IndexController) Home(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-
-	posts := datasource.DefaultGithub.PostList()
-
+	posts := datasource.DefaultDataSourcer.PostList()
 	view.Render(w, r, "index.html", map[string]interface{}{"posts": posts})
 }

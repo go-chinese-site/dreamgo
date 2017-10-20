@@ -8,6 +8,10 @@ package datasource
 
 import (
 	"bytes"
+	"config"
+
+	"model"
+	"net/http"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
@@ -20,6 +24,28 @@ const (
 )
 
 type DataSourcer interface {
+	PostList() []*model.Post
+	PostArchive() []*model.YearArchive
+	ServeMarkdown(w http.ResponseWriter, r *http.Request, filename string)
+	FindPost(path string) (*model.Post, error)
+	TagList() []*model.Tag
+	FindTag(tagName string) *model.Tag
+}
+
+var DefaultDataSourcer DataSourcer
+
+func Init() {
+
+	dataSourcerType := config.YamlConfig.Get("datasource.type").String()
+	switch dataSourcerType {
+	case "git":
+		DefaultDataSourcer = NewGithub()
+	case "mongodb":
+	//	DefaultDataSourcer = NewMongoDB()
+	case "mysql":
+	default:
+		DefaultDataSourcer = NewGithub()
+	}
 }
 
 func replaceCodeParts(htmlFile []byte) (string, error) {

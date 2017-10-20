@@ -36,7 +36,11 @@ const (
 
 type GithubRepo struct{}
 
-var DefaultGithub = &GithubRepo{}
+var DefaultGithub = NewGithub()
+
+func NewGithub() *GithubRepo {
+	return &GithubRepo{}
+}
 
 // PostList 读取文章列表
 func (self GithubRepo) PostList() []*model.Post {
@@ -68,7 +72,7 @@ func (self GithubRepo) PostArchive() []*model.YearArchive {
 	return yearArchives
 }
 
-// ServeMarkdown 处理查看Markdown请求
+// ServeMarkdown 处理查看 Markdown 请求
 func (self GithubRepo) ServeMarkdown(w http.ResponseWriter, r *http.Request, filename string) {
 	http.ServeFile(w, r, global.App.ProjectRoot+PostDir+util.Filename(filename)+"/post.md")
 }

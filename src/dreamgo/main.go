@@ -8,6 +8,7 @@ package main
 
 import (
 	"config"
+	"datasource"
 	"flag"
 	"http/controller"
 	"log"
@@ -39,7 +40,7 @@ func main() {
 	} else { // 相对路径，以程序根目录为基础解析
 		config.Parse(global.App.ProjectRoot + configFile)
 	}
-
+	datasource.Init()
 	go updateGitDataSource()
 	// 设置模板目录，默认为default
 	global.App.SetTemplateDir(config.YamlConfig.MustValue("theme", "default"))
