@@ -8,6 +8,7 @@ package model
 
 import "time"
 
+// 文章
 type Post struct {
 	Content string `yaml:"content"`
 	*Meta

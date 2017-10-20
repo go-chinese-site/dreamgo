@@ -5,6 +5,7 @@
 // Author: tk103331	tk103331@gmail.com
 package model
 
+// 标签
 type Tag struct {
 	Name  string  `yaml:"name"`
 	Posts []*Post `yaml:"posts"`

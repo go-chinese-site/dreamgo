@@ -4,6 +4,7 @@
 // https://studygolang.com
 // Author: polaris	polaris@studygolang.com
 
+// global 全局信息
 package global
 
 import (
@@ -49,25 +50,27 @@ func init() {
 	App.Version = "V1.0.0"
 	App.Build = Build
 	App.LaunchTime = time.Now()
-
+	// 查找可执行程序的路径
 	binaryPath, err := exec.LookPath(os.Args[0])
 	if err != nil {
 		panic(err)
 	}
-
+	// 获取可执行程序的绝对路径
 	binaryPath, err = filepath.Abs(binaryPath)
 	if err != nil {
 		panic(err)
 	}
+	// 获取可执行程序的文件信息
 	fileInfo, err := os.Stat(binaryPath)
 	if err != nil {
 		panic(err)
 	}
-
+	// 构建时间为可执行程序的修改时间
 	App.BuildDate = fileInfo.ModTime()
 	App.Copyright = fmt.Sprintf("%d", time.Now().Year())
 }
 
+// InitPath 初始化相关路径，包括项目根目录、模板目录
 func (this *app) InitPath() {
 	App.setProjectRoot()
 
@@ -99,6 +102,7 @@ func (this *app) setProjectRoot() {
 	this.ProjectRoot = projectRoot + "/"
 }
 
+// SetTemplateDir 设置模板目录
 func (this *app) SetTemplateDir(theme string) {
 	this.TemplateDir = this.ProjectRoot + "template/theme/" + theme + "/"
 }

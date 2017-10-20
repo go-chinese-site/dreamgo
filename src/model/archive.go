@@ -6,6 +6,7 @@
 
 package model
 
+// YearArchive 归档
 type YearArchive struct {
 	Year int `yaml:"year"`
 
