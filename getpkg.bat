@@ -13,7 +13,7 @@ set GOPATH=%~dp0
 
 cd src
 
-gvt restore -connections 8
+gvt restore -connections 8 -precaire
 
 cd ..
 

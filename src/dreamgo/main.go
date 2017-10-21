@@ -10,6 +10,7 @@ import (
 	"config"
 	"datasource"
 	"flag"
+	"global"
 	"http/controller"
 	"log"
 	"math/rand"
@@ -18,7 +19,6 @@ import (
 	"strings"
 	"time"
 	"util/logger"
-	"global"
 )
 
 var configFile string

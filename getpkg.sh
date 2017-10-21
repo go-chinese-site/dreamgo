@@ -19,12 +19,12 @@ export GOPATH=`pwd`
 
 cd src
 
-if [ -d "vendor/github.com" ]; then
-	if [ "$1" = "update" ]; then
+if [ "$1" = "update" ]; then
+	if [ -d "vendor/github.com" ]; then
 		gvt update -all
 	fi
 elif [ -f "vendor/manifest" ]; then
-	gvt restore -connections 8
+	gvt restore -connections 8 -precaire
 fi
 
 cd ..

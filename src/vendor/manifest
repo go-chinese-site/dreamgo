@@ -4,7 +4,7 @@
 		{
 			"importpath": "github.com/PuerkitoBio/goquery",
 			"repository": "https://github.com/PuerkitoBio/goquery",
-			"revision": "ce645ea5e67a713599b7415f21f0786451fa9554",
+			"revision": "1a71cc719d0d5b9e4f14ae072bef08b576b0bab5",
 			"branch": "master"
 		},
 		{
@@ -22,7 +22,7 @@
 		{
 			"importpath": "github.com/pkg/errors",
 			"repository": "https://github.com/pkg/errors",
-			"revision": "2b3a18b5f0fb6b4f9190549597d3f962c02bc5eb",
+			"revision": "f15c970de5b76fac0b59abb32d62c17cc7bed265",
 			"branch": "master"
 		},
 		{
@@ -34,7 +34,7 @@
 		{
 			"importpath": "github.com/russross/blackfriday",
 			"repository": "https://github.com/russross/blackfriday",
-			"revision": "4048872b16cc0fc2c5fd9eacf0ed2c2fedaa0c8c",
+			"revision": "6d1ef893fcb01b4f50cb6e57ed7df3e2e627b6b2",
 			"branch": "master"
 		},
 		{
