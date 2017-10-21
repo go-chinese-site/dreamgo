@@ -4,6 +4,7 @@
 *.so
 *.dylib
 
+
 # Test binary, build with `go test -c`
 *.test
 
@@ -18,3 +19,4 @@ bin
 pkg
 log
 data
+.idea/
