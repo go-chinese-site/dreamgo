@@ -17,7 +17,7 @@ import (
 	"route"
 	"strings"
 	"time"
-
+	"util/logger"
 	"global"
 )
 
@@ -30,6 +30,9 @@ func init() {
 }
 
 func main() {
+	// 日志
+	logger := logger.NewLogger("dreamgo")
+	logger.Info("main ... ")
 	// 解析命令行参数
 	flag.Parse()
 	// 初始化程序路径
