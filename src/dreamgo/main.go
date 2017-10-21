@@ -13,12 +13,12 @@ import (
 	"global"
 	"http/controller"
 	"log"
+	"logger"
 	"math/rand"
 	"net/http"
 	"route"
 	"strings"
 	"time"
-	"util/logger"
 )
 
 var configFile string
@@ -31,7 +31,7 @@ func init() {
 
 func main() {
 	// 日志
-	logger := logger.NewLogger("dreamgo")
+	logger := logger.Init("dreamgo")
 	logger.Info("main ... ")
 	// 解析命令行参数
 	flag.Parse()

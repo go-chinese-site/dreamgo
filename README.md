@@ -37,6 +37,7 @@
 	- 目前已实现了如下功能：
 		1. 基于 http.ServeMux 的简单封装：route.BlogMux，方便写中间件；
 		2. 完成基于 github repo 的首页、归档、文章；
+		3. 完成日志功能，在main.go中已实例化，其他地方调用logger := logger.Instance()即可；
 	- 还未实现的功能：（大家可以认领，提 issue 告知要开发哪个或加入 qq 群沟通 195831198）
 		1. tag 列表和 tag 文章列表页（tk 开发中）；
 		2. 友情链接页；

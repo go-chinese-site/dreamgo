@@ -7,6 +7,7 @@ import (
 	"path"
 	"time"
 
+	"global"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
@@ -28,9 +29,9 @@ func Init(srvName string) *zap.Logger {
 // NewLogger 新建日志
 func NewLogger(srvName string) *zap.Logger {
 
-	directory := "./"
+	directory := global.App.ProjectRoot
 	if len(directory) == 0 {
-		directory = path.Join("..", "log", srvName)
+		directory = path.Join("", "log", srvName)
 	} else {
 		directory = path.Join(directory, "log", srvName)
 	}
