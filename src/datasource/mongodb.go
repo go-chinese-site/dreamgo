@@ -27,7 +27,7 @@ func NewMongoDB() *MongoDB {
 	}
 	mongoDBDialInfo := &mgo.DialInfo{
 		Addrs:     []string{addr},
-		Timeout:   60 * time.Second,
+		Timeout:   10 * time.Second,
 		PoolLimit: 4096,
 	}
 	session, err := mgo.DialWithInfo(mongoDBDialInfo)
@@ -43,7 +43,7 @@ func (self *MongoDB) sessionclone() *mgo.Session {
 		var err error
 		mongoDBDialInfo := &mgo.DialInfo{
 			Addrs:     []string{self.addr},
-			Timeout:   60 * time.Second,
+			Timeout:   10 * time.Second,
 			PoolLimit: 4096,
 		}
 		self.session, err = mgo.DialWithInfo(mongoDBDialInfo)
