@@ -20,15 +20,13 @@ func Instance() *zap.Logger {
 }
 
 // Init作用初始化,srvName 生成的日志文件夹名字
-func Init(srvName string) *zap.Logger {
-	instance = NewLogger(srvName)
+func Init(directory, srvName string) *zap.Logger {
+	instance = NewLogger(directory, srvName)
 	return instance
 }
 
 // NewLogger 新建日志
-func NewLogger(srvName string) *zap.Logger {
-
-	directory := "./"
+func NewLogger(directory, srvName string) *zap.Logger {
 	if len(directory) == 0 {
 		directory = path.Join("..", "log", srvName)
 	} else {
