@@ -30,7 +30,7 @@ func init() {
 }
 
 func main() {
-	//日志
+	// 日志
 	logger := logger.NewLogger("dreamgo")
 	logger.Info("main ... ")
 	// 解析命令行参数
