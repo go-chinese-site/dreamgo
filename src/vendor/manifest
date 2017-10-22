@@ -4,7 +4,7 @@
 		{
 			"importpath": "github.com/PuerkitoBio/goquery",
 			"repository": "https://github.com/PuerkitoBio/goquery",
-			"revision": "ce645ea5e67a713599b7415f21f0786451fa9554",
+			"revision": "1a71cc719d0d5b9e4f14ae072bef08b576b0bab5",
 			"branch": "master"
 		},
 		{
@@ -22,7 +22,7 @@
 		{
 			"importpath": "github.com/pkg/errors",
 			"repository": "https://github.com/pkg/errors",
-			"revision": "2b3a18b5f0fb6b4f9190549597d3f962c02bc5eb",
+			"revision": "f15c970de5b76fac0b59abb32d62c17cc7bed265",
 			"branch": "master"
 		},
 		{
@@ -34,7 +34,7 @@
 		{
 			"importpath": "github.com/russross/blackfriday",
 			"repository": "https://github.com/russross/blackfriday",
-			"revision": "4048872b16cc0fc2c5fd9eacf0ed2c2fedaa0c8c",
+			"revision": "6d1ef893fcb01b4f50cb6e57ed7df3e2e627b6b2",
 			"branch": "master"
 		},
 		{
@@ -50,6 +50,24 @@
 			"branch": "master"
 		},
 		{
+			"importpath": "go.uber.org/atomic",
+			"repository": "https://github.com/uber-go/atomic",
+			"revision": "54f72d32435d760d5604f17a82e2435b28dc4ba5",
+			"branch": "master"
+		},
+		{
+			"importpath": "go.uber.org/multierr",
+			"repository": "https://github.com/uber-go/multierr",
+			"revision": "fb7d312c2c04c34f0ad621048bbb953b168f9ff6",
+			"branch": "master"
+		},
+		{
+			"importpath": "go.uber.org/zap",
+			"repository": "https://github.com/uber-go/zap",
+			"revision": "35aad584952c3e7020db7b839f6b102de6271f89",
+			"branch": "master"
+		},
+		{
 			"importpath": "golang.org/x/net/html",
 			"repository": "https://github.com/golang/net",
 			"revision": "0a9397675ba34b2845f758fe3cd68828369c6517",
@@ -61,6 +79,12 @@
 			"repository": "https://gopkg.in/mgo.v2",
 			"revision": "3f83fa5005286a7fe593b055f0d7771a7dce4655",
 			"branch": "v2"
+		},
+		{
+			"importpath": "gopkg.in/natefinch/lumberjack.v2",
+			"repository": "https://gopkg.in/natefinch/lumberjack.v2",
+			"revision": "a96e63847dc3c67d17befa69c303767e2f84e54f",
+			"branch": "master"
 		},
 		{
 			"importpath": "gopkg.in/yaml.v2",

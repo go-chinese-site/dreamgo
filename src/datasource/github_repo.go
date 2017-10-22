@@ -352,3 +352,20 @@ func (self GithubRepo) FindTag(tagName string) *model.Tag {
 	}
 	return nil
 }
+
+// AboutPost 获取关于页
+func (self GithubRepo) AboutPost() (*model.Post, error) {
+	// 从 about.md 中读取关于内容
+	postDir := global.App.ProjectRoot + PostDir
+	markdown, err := ioutil.ReadFile(postDir + "/about.md")
+	if err != nil {
+		return nil, errors.Wrap(err, "read about.md error")
+	}
+	// 关于页不需要 meta.yml
+	var meta = &model.Meta{}
+	post := &model.Post{
+		Content: string(markdown),
+		Meta:    meta,
+	}
+	return post, nil
+}

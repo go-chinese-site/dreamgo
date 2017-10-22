@@ -190,3 +190,11 @@ func (self MongoDB) FindTag(tagName string) *model.Tag {
 	}
 	return nil
 }
+
+func (self MongoDB) AboutPost() (*model.Post, error) {
+	var meta = &model.Meta{}
+	post := &model.Post{
+		Content: string(""),
+		Meta:    meta,
+	}
+}
