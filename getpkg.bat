@@ -11,6 +11,20 @@ goto end
 set OLDGOPATH=%GOPATH%
 set GOPATH=%~dp0
 
+if not exist ./bin/gvt.exe (
+
+	echo ....get the gvt tool....
+	go get github.com/polaris1119/gvt
+)
+
+if not exist ./bin/gvt.exe (
+	echo  get the gvt tool fail
+	echo  You may obtain it with the following command:
+	echo  go get github.com/polaris1119/gvt
+)else (
+	echo get the gvt tool success
+)
+
 cd src
 
 gvt restore -connections 8 -precaire
