@@ -197,4 +197,5 @@ func (self MongoDB) AboutPost() (*model.Post, error) {
 		Content: string(""),
 		Meta:    meta,
 	}
+	return post, nil
 }
