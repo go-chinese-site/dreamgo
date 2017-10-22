@@ -30,6 +30,7 @@ type DataSourcer interface {
 	FindPost(path string) (*model.Post, error)
 	TagList() []*model.Tag
 	FindTag(tagName string) *model.Tag
+	AboutPost() (*model.Post, error)
 }
 
 var DefaultDataSourcer DataSourcer
