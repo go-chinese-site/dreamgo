@@ -20,7 +20,8 @@ import (
 )
 
 const (
-	TypeGit = "git"
+	TypeGit   = "git"
+	TypeMysql = "mysql"
 )
 
 type DataSourcer interface {
@@ -44,6 +45,7 @@ func Init() {
 	case "mongodb":
 	//	DefaultDataSourcer = NewMongoDB()
 	case "mysql":
+		DefaultDataSourcer = NewMysql()
 	default:
 		DefaultDataSourcer = NewGithub()
 	}
