@@ -186,7 +186,7 @@ func (self *MysqlRepo) GenIndexYaml() {
 		if err != nil {
 			log.Println("scan error", err)
 		}
-		posts = append(posts, &model.Post{
+		post := &model.Post{
 			Content: info.Content,
 			Meta: &model.Meta{
 				Title:    info.Title,
@@ -194,7 +194,9 @@ func (self *MysqlRepo) GenIndexYaml() {
 				PubTime:  self.parsePubTime(info.PubTime),
 				PostTime: time.Unix(info.PubTime, 0).In(time.Local),
 			},
-		})
+		}
+		// post.Content, err = replaceCodeParts(blackfriday.MarkdownCommon([]byte(post.Content)))
+		posts = append(posts, post)
 	}
 
 	buf, err := yaml.Marshal(posts)
