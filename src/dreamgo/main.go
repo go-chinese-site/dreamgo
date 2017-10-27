@@ -58,7 +58,7 @@ func main() {
 	fileHandler := http.StripPrefix("/static/", http.FileServer(http.Dir(global.App.ProjectRoot+"/static")))
 	http.HandleFunc("/static/", func(w http.ResponseWriter, r *http.Request) {
 		reqURI := r.RequestURI
-		if strings.HasSuffix(reqURI, "/") {
+		if strings.HasSuffix(reqURI, "/") { //以/结尾的URL，直接返回404
 			http.NotFound(w, r)
 		} else {
 			fileHandler.ServeHTTP(w, r)
