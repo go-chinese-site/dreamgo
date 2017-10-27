@@ -84,7 +84,19 @@ func updateMysqlDataSource() {
 		if err := os.MkdirAll(mysqlRepoDir, os.ModePerm); err != nil {
 			panic(err)
 		}
-		// 待实现
 	}
+	// 解析仓库文件，生成首页、归档、标签数据
+	datasource.DefaultMysql.GenIndexYaml()
+	datasource.DefaultMysql.GenArchiveYaml()
+	datasource.DefaultMysql.GenTagsYaml()
+
+	// 定时每天自动更新仓库，并生成首页、归档、标签数据
+	c := cron.New()
+	c.AddFunc("@daily", func() {
+		datasource.DefaultMysql.GenIndexYaml()
+		datasource.DefaultMysql.GenArchiveYaml()
+		datasource.DefaultMysql.GenTagsYaml()
+	})
+	c.Start()
 
 }

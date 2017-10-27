@@ -45,7 +45,7 @@ func Init() {
 	case "mongodb":
 	//	DefaultDataSourcer = NewMongoDB()
 	case "mysql":
-		DefaultDataSourcer = NewMysql()
+		DefaultDataSourcer = NewMysql(config.YamlConfig.Get("datasource.mysqlAddr").String())
 	default:
 		DefaultDataSourcer = NewGithub()
 	}
