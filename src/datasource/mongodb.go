@@ -73,7 +73,16 @@ func (self MongoDB) PostList() []*model.Post {
 
 func (self MongoDB) PostArchive() []*model.YearArchive {
 
-	posts := self.PostList()
+	s := self.sessionclone()
+	defer s.Close()
+	posts := make([]*model.Post, 0)
+	c := s.DB(self.db).C("index")
+	// 根据meta.pubtime 逆序排序并 取出20个
+	err := c.Find(nil).Sort("-meta.pubtime").All(&posts)
+	if err != nil {
+		log.Printf("get list failed from mongodb err:&s\n", err)
+		return nil
+	}
 
 	yearArchiveMap := make(map[int]*model.YearArchive)
 	for _, post := range posts {
@@ -149,9 +158,16 @@ func (self MongoDB) FindPost(path string) (*model.Post, error) {
 }
 
 func (self MongoDB) TagList() []*model.Tag {
-
-	allPosts := self.PostList()
-
+	s := self.sessionclone()
+	defer s.Close()
+	allPosts := make([]*model.Post, 0)
+	c := s.DB(self.db).C("index")
+	// 根据meta.pubtime 逆序排序并 取出20个
+	err := c.Find(nil).Sort("-meta.pubtime").All(&allPosts)
+	if err != nil {
+		log.Printf("get list failed from mongodb err:&s\n", err)
+		return nil
+	}
 	tagMap := make(map[string][]*model.Post)
 	//遍历所有文章对象，分析出标签数据
 	for _, post := range allPosts {
