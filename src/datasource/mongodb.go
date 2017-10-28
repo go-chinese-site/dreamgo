@@ -72,7 +72,7 @@ func (self MongoDB) PostList() []*model.Post {
 }
 
 func (self MongoDB) PostArchive() []*model.YearArchive {
-
+	// 目前先从mongodb中将所有的文章都取出来 在进行处理
 	s := self.sessionclone()
 	defer s.Close()
 	posts := make([]*model.Post, 0)
@@ -158,6 +158,7 @@ func (self MongoDB) FindPost(path string) (*model.Post, error) {
 }
 
 func (self MongoDB) TagList() []*model.Tag {
+	// 目前先从mongodb中将所有的文章都取出来 在进行处理
 	s := self.sessionclone()
 	defer s.Close()
 	allPosts := make([]*model.Post, 0)
