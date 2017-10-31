@@ -42,7 +42,7 @@ func Init() {
 	case "git":
 		DefaultDataSourcer = NewGithub()
 	case "mongodb":
-	//	DefaultDataSourcer = NewMongoDB()
+		DefaultDataSourcer = NewMongoDB()
 	case "mysql":
 	default:
 		DefaultDataSourcer = NewGithub()
