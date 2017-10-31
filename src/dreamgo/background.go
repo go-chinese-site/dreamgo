@@ -71,3 +71,32 @@ func cloneRepo(gitRepoDir string) {
 		return
 	}
 }
+
+// 更新mysql数据
+func updateMysqlDataSource() {
+	typ := config.YamlConfig.Get("datasource.type").String()
+	if typ != datasource.TypeMysql {
+		return
+	}
+	// 检查文章目录(data/post/)是否存在，不存在则连接mysql生成
+	mysqlRepoDir := global.App.ProjectRoot + datasource.PostDir
+	if !util.Exist(mysqlRepoDir) {
+		if err := os.MkdirAll(mysqlRepoDir, os.ModePerm); err != nil {
+			panic(err)
+		}
+	}
+	// 解析仓库文件，生成首页、归档、标签数据
+	datasource.DefaultMysql.GenIndexYaml()
+	datasource.DefaultMysql.GenArchiveYaml()
+	datasource.DefaultMysql.GenTagsYaml()
+
+	// 定时每天自动更新仓库，并生成首页、归档、标签数据
+	c := cron.New()
+	c.AddFunc("@daily", func() {
+		datasource.DefaultMysql.GenIndexYaml()
+		datasource.DefaultMysql.GenArchiveYaml()
+		datasource.DefaultMysql.GenTagsYaml()
+	})
+	c.Start()
+
+}

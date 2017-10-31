@@ -45,6 +45,7 @@ func main() {
 	}
 	datasource.Init()
 	go updateGitDataSource()
+	go updateMysqlDataSource()
 	// 设置模板目录，默认为default
 	global.App.SetTemplateDir(config.YamlConfig.MustValue("theme", "default"))
 	// 从配置文件中获取监听IP和端口
