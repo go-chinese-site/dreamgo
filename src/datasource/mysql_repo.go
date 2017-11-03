@@ -8,16 +8,17 @@ import (
 	"log"
 	"model"
 	"net/http"
+	"os"
 	"sort"
 	"strconv"
 	"time"
 	"util"
 
-	"gopkg.in/yaml.v2"
-
 	_ "github.com/go-sql-driver/mysql" // data source
 	"github.com/pkg/errors"
+	"github.com/robfig/cron"
 	"github.com/russross/blackfriday"
+	"gopkg.in/yaml.v2"
 )
 
 type MysqlRepo struct {
@@ -41,8 +42,6 @@ type tagInfo struct {
 	Id   int64  `json:"id"`
 	Name string `json:"name"`
 }
-
-var DefaultMysql = NewMysql("dreamgo:123456@tcp(127.0.0.1:3306)/dreamgo")
 
 func NewMysql(dbParams string) *MysqlRepo {
 	db, err := sql.Open("mysql", dbParams)
@@ -114,15 +113,21 @@ func (self *MysqlRepo) FindPost(path string) (*model.Post, error) {
 	info := articleInfo{}
 	row.Scan(&info.Id, &info.Title, &info.PubTime, &info.Content)
 
-	post := &model.Post{
-		Content: info.Content,
-		Meta: &model.Meta{
-			Title:    info.Title,
-			Path:     fmt.Sprintf("%d.html", info.Id),
-			PubTime:  self.parsePubTime(info.PubTime),
-			PostTime: time.Unix(info.PubTime, 0).In(time.Local),
-		},
+	post := self.genOnePost(info)
+	rows, err := self.selectArticleTagsById.Query(info.Id)
+	if err != nil {
+		log.Fatalf("Query article tags error:%s", err)
 	}
+	var tags []string
+	for rows.Next() {
+		var tagName string
+		err = rows.Scan(&tagName)
+		if err != nil {
+			log.Println("Scan tag error:%s", err)
+		}
+		tags = append(tags, tagName)
+	}
+	post.Tags = tags
 
 	post.Content, err = replaceCodeParts(blackfriday.MarkdownCommon([]byte(post.Content)))
 
@@ -186,17 +191,8 @@ func (self *MysqlRepo) GenIndexYaml() {
 		if err != nil {
 			log.Println("scan error", err)
 		}
-		post := &model.Post{
-			Content: info.Content,
-			Meta: &model.Meta{
-				Title:    info.Title,
-				Path:     fmt.Sprintf("%d.html", info.Id),
-				PubTime:  self.parsePubTime(info.PubTime),
-				PostTime: time.Unix(info.PubTime, 0).In(time.Local),
-			},
-		}
 		// post.Content, err = replaceCodeParts(blackfriday.MarkdownCommon([]byte(post.Content)))
-		posts = append(posts, post)
+		posts = append(posts, self.genOnePost(info))
 	}
 
 	buf, err := yaml.Marshal(posts)
@@ -223,14 +219,7 @@ func (self *MysqlRepo) GenArchiveYaml() {
 		if err != nil {
 			log.Println("query error", err)
 		}
-		posts = append(posts, &model.Post{
-			Meta: &model.Meta{
-				Title:    info.Title,
-				Path:     fmt.Sprintf("%d.html", info.Id),
-				PubTime:  self.parsePubTime(info.PubTime),
-				PostTime: time.Unix(info.PubTime, 0).In(time.Local),
-			},
-		})
+		posts = append(posts, self.genOnePost(info))
 	}
 
 	yearArchiveMap := make(map[int]*model.YearArchive)
@@ -313,14 +302,7 @@ func (self *MysqlRepo) GenTagsYaml() {
 			if err != nil {
 				log.Println("query error", err)
 			}
-			tagMap[info.Name] = append(tagMap[info.Name], &model.Post{
-				Meta: &model.Meta{
-					Title:    article.Title,
-					Path:     fmt.Sprintf("%d.html", article.Id),
-					PubTime:  self.parsePubTime(article.PubTime),
-					PostTime: time.Unix(article.PubTime, 0).In(time.Local),
-				},
-			})
+			tagMap[info.Name] = append(tagMap[info.Name], self.genOnePost(article))
 		}
 	}
 
@@ -345,4 +327,41 @@ func (self *MysqlRepo) GenTagsYaml() {
 
 	tagsYaml := global.App.ProjectRoot + PostDir + TagsFile
 	ioutil.WriteFile(tagsYaml, buf, 0777)
+}
+
+// genOnePost 组装一个post
+func (self *MysqlRepo) genOnePost(info articleInfo) *model.Post {
+	return &model.Post{
+		Content: info.Content,
+		Meta: &model.Meta{
+			Title:    info.Title,
+			Path:     fmt.Sprintf("%d.html", info.Id),
+			PubTime:  self.parsePubTime(info.PubTime),
+			PostTime: time.Unix(info.PubTime, 0).In(time.Local),
+		},
+	}
+}
+
+// 更新mysql数据
+func (self *MysqlRepo) UpdateDataSource() {
+	// 检查文章目录(data/post/)是否存在，不存在则连接mysql生成
+	mysqlRepoDir := global.App.ProjectRoot + PostDir
+	if !util.Exist(mysqlRepoDir) {
+		if err := os.MkdirAll(mysqlRepoDir, os.ModePerm); err != nil {
+			panic(err)
+		}
+	}
+	// 解析仓库文件，生成首页、归档、标签数据
+	self.GenIndexYaml()
+	self.GenArchiveYaml()
+	self.GenTagsYaml()
+
+	// 定时每天自动更新仓库，并生成首页、归档、标签数据
+	c := cron.New()
+	c.AddFunc("@daily", func() {
+		self.GenIndexYaml()
+		self.GenArchiveYaml()
+		self.GenTagsYaml()
+	})
+	c.Start()
 }

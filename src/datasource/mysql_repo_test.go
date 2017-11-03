@@ -8,6 +8,8 @@ import (
 	"testing"
 )
 
+var DefaultMysql = datasource.NewMysql("dreamgo:123456@tcp(127.0.0.1:3306)/dreamgo")
+
 func Init() {
 	cwd, _ := os.Getwd()
 	pos := strings.LastIndex(cwd, "src")
@@ -17,17 +19,17 @@ func Init() {
 func TestGenMysqlIndexYaml(t *testing.T) {
 	Init()
 
-	datasource.DefaultMysql.GenIndexYaml()
+	DefaultMysql.GenIndexYaml()
 }
 
 func TestGenMysqlArchiveYaml(t *testing.T) {
 	Init()
 
-	datasource.DefaultMysql.GenArchiveYaml()
+	DefaultMysql.GenArchiveYaml()
 }
 
 func TestGenMysqlTagsYaml(t *testing.T) {
 	Init()
 
-	datasource.DefaultMysql.GenTagsYaml()
+	DefaultMysql.GenTagsYaml()
 }

@@ -9,7 +9,6 @@ package datasource
 import (
 	"bytes"
 	"config"
-
 	"model"
 	"net/http"
 	"strings"
@@ -46,6 +45,7 @@ func Init() {
 		DefaultDataSourcer = NewMongoDB()
 	case "mysql":
 		DefaultDataSourcer = NewMysql(config.YamlConfig.Get("datasource.mysqlAddr").String())
+		go DefaultDataSourcer.(*MysqlRepo).UpdateDataSource()
 	default:
 		DefaultDataSourcer = NewGithub()
 	}
