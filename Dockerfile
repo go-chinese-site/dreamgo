@@ -1,7 +1,7 @@
 FROM golang
 
 RUN go get github.com/polaris1119/gvt
-RUN mv /go/bin/gvt /usr/local/bin/
+RUN ln -sf /go/bin/gvt /usr/local/bin/
 ADD . /dreamgo
 
 # install dreamgo
