@@ -54,16 +54,6 @@ func main() {
 	addr := global.App.Host + ":" + global.App.Port
 	// 注册路由
 	controller.RegisterRoutes()
-	// 以/static/开头的URL为静态文件，使用 http.FileServer 直接处理
-	fileHandler := http.StripPrefix("/static/", http.FileServer(http.Dir(global.App.ProjectRoot+"/static")))
-	http.HandleFunc("/static/", func(w http.ResponseWriter, r *http.Request) {
-		reqURI := r.RequestURI
-		if strings.HasSuffix(reqURI, "/") { //以/结尾的URL，直接返回404
-			http.NotFound(w, r)
-		} else {
-			fileHandler.ServeHTTP(w, r)
-		}
-	})
 	// 启动监听，使用封装的 route.DefaultBlogMux 处理http请求
 	log.Fatal(http.ListenAndServe(addr, route.DefaultBlogMux))
 }
