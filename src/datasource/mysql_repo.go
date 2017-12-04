@@ -365,3 +365,11 @@ func (self *MysqlRepo) UpdateDataSource() {
 	})
 	c.Start()
 }
+
+func (self *MysqlRepo) GetFriends() ([]*model.Friend, error) {
+	var friends = []*model.Friend{
+		{Name: "go语言中文网", Link: "https://studygolang.com"},
+	}
+
+	return friends, nil
+}

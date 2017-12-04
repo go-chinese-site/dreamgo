@@ -32,6 +32,7 @@ const (
 	IndexFile   = "index.yaml"
 	ArchiveFile = "archive.yaml"
 	TagsFile    = "tags.yaml"
+	FriendFile  = "friends.yaml"
 )
 
 type GithubRepo struct{}
@@ -368,4 +369,30 @@ func (self GithubRepo) AboutPost() (*model.Post, error) {
 		Meta:    meta,
 	}
 	return post, nil
+}
+
+func (self GithubRepo) GetFriends() ([]*model.Friend, error) {
+	// 从friends.yaml 中读取友情链接内容
+	in, err := ioutil.ReadFile(global.App.ProjectRoot + PostDir + FriendFile)
+
+	if err != nil {
+		return nil, errors.Wrap(err, "read friends.yaml error")
+	}
+
+	var friends []*model.Friend
+	type friendsYaml struct {
+		Name string
+		Url  string
+		Logo string
+	}
+	friendsObj := make(map[string]friendsYaml)
+	err = yaml.Unmarshal(in, friendsObj)
+	if err != nil {
+		return nil, errors.Wrap(err, "Unmarshal friends.yaml error")
+	}
+
+	for _, v := range friendsObj {
+		friends = append(friends, &model.Friend{Name: v.Name, Link: v.Url, Logo: v.Logo})
+	}
+	return friends, nil
 }

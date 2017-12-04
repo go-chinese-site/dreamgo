@@ -31,6 +31,7 @@ type DataSourcer interface {
 	TagList() []*model.Tag
 	FindTag(tagName string) *model.Tag
 	AboutPost() (*model.Post, error)
+	GetFriends() ([]*model.Friend, error)
 }
 
 var DefaultDataSourcer DataSourcer
