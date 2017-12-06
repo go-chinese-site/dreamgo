@@ -34,6 +34,5 @@ func (IndexController) Home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	posts := datasource.DefaultDataSourcer.PostList()
-	//	io.WriteString(w, "你说这是不是个玩笑")
 	view.Render(w, r, "index.html", map[string]interface{}{"posts": posts})
 }
