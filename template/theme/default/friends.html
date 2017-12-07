@@ -1,0 +1,13 @@
+{{define "title"}}友情链接{{end}}
+{{define "content"}}
+	<article class="post post-list">
+		<h1>友情链接</h1>
+		<br>
+		<ul style="list-style:none;">
+		{{range .friends}}
+			<li style="float:left;margin:20px"><a href="{{.Link}}" title="{{.Name}}"><img style="width:160px" src="{{.Logo}}"/></a></li>
+		{{end}}
+		</ul>
+		</div>
+	</article>
+{{end}}
