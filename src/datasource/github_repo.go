@@ -26,19 +26,26 @@ import (
 )
 
 const (
-	// PostDir is the directory of storing posts
+	// PostDir 文章存放目录
 	PostDir = "data/post/"
 
+	// IndexFile 首页数据文件
 	IndexFile   = "index.yaml"
+	// ArchiveFile 归档数据文件
 	ArchiveFile = "archive.yaml"
+	// TagsFile 标签数据文件
 	TagsFile    = "tags.yaml"
+	// FriendFile 友情链接数据文件
 	FriendFile  = "friends.yaml"
 )
 
+// GithubRepo git数据源结构体
 type GithubRepo struct{}
 
+// DefaultGithub git数据源结构体实例
 var DefaultGithub = NewGithub()
 
+// NewGithub 创建git数据源实例，相当于构造方法
 func NewGithub() *GithubRepo {
 	return &GithubRepo{}
 }
