@@ -26,19 +26,26 @@ import (
 )
 
 const (
-	// PostDir is the directory of storing posts
+	// PostDir 文章存放目录
 	PostDir = "data/post/"
 
+	// IndexFile 首页数据文件
 	IndexFile   = "index.yaml"
+	// ArchiveFile 归档数据文件
 	ArchiveFile = "archive.yaml"
+	// TagsFile 标签数据文件
 	TagsFile    = "tags.yaml"
+	// FriendFile 友情链接数据文件
 	FriendFile  = "friends.yaml"
 )
 
+// GithubRepo git数据源结构体
 type GithubRepo struct{}
 
+// DefaultGithub git数据源结构体实例
 var DefaultGithub = NewGithub()
 
+// NewGithub 创建git数据源实例，相当于构造方法
 func NewGithub() *GithubRepo {
 	return &GithubRepo{}
 }
@@ -371,6 +378,7 @@ func (self GithubRepo) AboutPost() (*model.Post, error) {
 	return post, nil
 }
 
+// GetFriends 友情链接
 func (self GithubRepo) GetFriends() ([]*model.Friend, error) {
 	// 从friends.yaml 中读取友情链接内容
 	in, err := ioutil.ReadFile(global.App.ProjectRoot + PostDir + FriendFile)
@@ -379,20 +387,10 @@ func (self GithubRepo) GetFriends() ([]*model.Friend, error) {
 		return nil, errors.Wrap(err, "read friends.yaml error")
 	}
 
-	var friends []*model.Friend
-	type friendsYaml struct {
-		Name string
-		Url  string
-		Logo string
-	}
-	friendsObj := make(map[string]friendsYaml)
-	err = yaml.Unmarshal(in, friendsObj)
+	friends := make([]*model.Friend, 0)
+	err = yaml.Unmarshal(in, &friends)
 	if err != nil {
 		return nil, errors.Wrap(err, "Unmarshal friends.yaml error")
-	}
-
-	for _, v := range friendsObj {
-		friends = append(friends, &model.Friend{Name: v.Name, Link: v.Url, Logo: v.Logo})
 	}
 	return friends, nil
 }

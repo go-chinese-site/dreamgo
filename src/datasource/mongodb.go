@@ -13,12 +13,14 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
+// MongoDB 数据源结构体
 type MongoDB struct {
 	session *mgo.Session
 	addr    string
 	db      string
 }
 
+// NewMongoDB 创建MongoDB数据源实例，相当于构造方法
 func NewMongoDB() *MongoDB {
 	addr := config.YamlConfig.Get("datasource.monogdbaddr").String()
 	db := config.YamlConfig.Get("datasource.monogdbdb").String()
@@ -55,7 +57,7 @@ func (self *MongoDB) sessionclone() *mgo.Session {
 	return self.session.Clone()
 }
 
-// PostList读取文章列表
+// PostList 读取文章列表
 func (self MongoDB) PostList() []*model.Post {
 
 	s := self.sessionclone()
@@ -65,12 +67,13 @@ func (self MongoDB) PostList() []*model.Post {
 	// 根据meta.pubtime 逆序排序并 取出20个
 	err := c.Find(nil).Sort("-meta.pubtime").Limit(20).All(&posts)
 	if err != nil {
-		log.Printf("get list failed from mongodb err:&s\n", err)
+		log.Printf("get list failed from mongodb err: %s\n", err)
 		return nil
 	}
 	return posts
 }
 
+// PostArchive 归档
 func (self MongoDB) PostArchive() []*model.YearArchive {
 	// 目前先从mongodb中将所有的文章都取出来 在进行处理
 	s := self.sessionclone()
@@ -80,7 +83,7 @@ func (self MongoDB) PostArchive() []*model.YearArchive {
 	// 根据meta.pubtime 逆序排序并 取出20个
 	err := c.Find(nil).Sort("-meta.pubtime").All(&posts)
 	if err != nil {
-		log.Printf("get list failed from mongodb err:&s\n", err)
+		log.Printf("get list failed from mongodb err: %s\n", err)
 		return nil
 	}
 
@@ -134,6 +137,7 @@ func (self MongoDB) PostArchive() []*model.YearArchive {
 	return yearArchives
 }
 
+// ServeMarkdown 处理Markdown
 func (self MongoDB) ServeMarkdown(w http.ResponseWriter, r *http.Request, filename string) {
 	//TODO
 	//	http.ServeFile(w, r, global.App.ProjectRoot+PostDir+util.Filename(filename)+"/post.md")
@@ -151,12 +155,12 @@ func (self MongoDB) FindPost(path string) (*model.Post, error) {
 	if err != nil {
 		log.Printf("Find post failed from mongodb err:%s\n", err)
 		return post, err
-	} else {
-		post.Content, err = replaceCodeParts(blackfriday.MarkdownCommon([]byte(post.Content)))
 	}
+	post.Content, err = replaceCodeParts(blackfriday.MarkdownCommon([]byte(post.Content)))
 	return post, err
 }
 
+// TagList 标签列表
 func (self MongoDB) TagList() []*model.Tag {
 	// 目前先从mongodb中将所有的文章都取出来 在进行处理
 	s := self.sessionclone()
@@ -166,7 +170,7 @@ func (self MongoDB) TagList() []*model.Tag {
 	// 根据meta.pubtime 逆序排序并 取出20个
 	err := c.Find(nil).Sort("-meta.pubtime").All(&allPosts)
 	if err != nil {
-		log.Printf("get list failed from mongodb err:&s\n", err)
+		log.Printf("get list failed from mongodb err: %s\n", err)
 		return nil
 	}
 	tagMap := make(map[string][]*model.Post)
@@ -198,6 +202,7 @@ func (self MongoDB) TagList() []*model.Tag {
 	return tags
 }
 
+// FindTag 查找标签
 func (self MongoDB) FindTag(tagName string) *model.Tag {
 	tags := self.TagList()
 	for _, tag := range tags {
@@ -208,6 +213,7 @@ func (self MongoDB) FindTag(tagName string) *model.Tag {
 	return nil
 }
 
+// AboutPost 关于
 func (self MongoDB) AboutPost() (*model.Post, error) {
 	var meta = &model.Meta{}
 	post := &model.Post{
@@ -217,6 +223,7 @@ func (self MongoDB) AboutPost() (*model.Post, error) {
 	return post, nil
 }
 
+// GetFriends 友情链接
 func (self MongoDB) GetFriends() ([]*model.Friend, error) {
 	var friends = []*model.Friend{
 		{Name: "go语言中文网", Link: "https://studygolang.com"},

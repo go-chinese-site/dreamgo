@@ -21,6 +21,7 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+// MysqlRepo mysql 数据源结构体
 type MysqlRepo struct {
 	db                    *sql.DB
 	selectTag             *sql.Stmt
@@ -44,12 +45,15 @@ type tagInfo struct {
 	Name string `json:"name"`
 }
 
+
 type friendInfo struct {
 	Id   int64  `json:"id"`
 	Name string `json:"name"`
 	Link string `json:"link"`
 	Logo string `json:"logo"`
 }
+
+// NewMysql 创建mysql数据源实例，相当于构造方法
 
 func NewMysql(dbParams string) *MysqlRepo {
 	db, err := sql.Open("mysql", dbParams)
@@ -132,7 +136,7 @@ func (self *MysqlRepo) FindPost(path string) (*model.Post, error) {
 		var tagName string
 		err = rows.Scan(&tagName)
 		if err != nil {
-			log.Println("Scan tag error:%s", err)
+			log.Printf("Scan tag error: %s\n", err)
 		}
 		tags = append(tags, tagName)
 	}
@@ -351,7 +355,7 @@ func (self *MysqlRepo) genOnePost(info articleInfo) *model.Post {
 	}
 }
 
-// 更新mysql数据
+// UpdateDataSource 更新mysql数据
 func (self *MysqlRepo) UpdateDataSource() {
 	// 检查文章目录(data/post/)是否存在，不存在则连接mysql生成
 	mysqlRepoDir := global.App.ProjectRoot + PostDir
@@ -375,6 +379,7 @@ func (self *MysqlRepo) UpdateDataSource() {
 	c.Start()
 }
 
+// GetFriends 友情链接
 func (self *MysqlRepo) GetFriends() ([]*model.Friend, error) {
 	var friends []*model.Friend
 	rows, err := self.selectFriend.Query()

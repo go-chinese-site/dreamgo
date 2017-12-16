@@ -18,11 +18,13 @@ import (
 	"github.com/sourcegraph/syntaxhighlight"
 )
 
+// 数据源类型
 const (
 	TypeGit   = "git"
 	TypeMysql = "mysql"
 )
 
+// DataSourcer 数据源接口
 type DataSourcer interface {
 	PostList() []*model.Post
 	PostArchive() []*model.YearArchive
@@ -34,8 +36,10 @@ type DataSourcer interface {
 	GetFriends() ([]*model.Friend, error)
 }
 
+// DefaultDataSourcer 默认数据源
 var DefaultDataSourcer DataSourcer
 
+// Init 数据源初始化
 func Init() {
 
 	dataSourcerType := config.YamlConfig.Get("datasource.type").String()
