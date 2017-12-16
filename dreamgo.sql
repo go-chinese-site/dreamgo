@@ -135,3 +135,16 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2017-10-27 22:56:40
+
+--
+-- Table structure for table `friend_link`
+--
+
+DROP TABLE IF EXISTS `friend_link`;
+CREATE TABLE `friend_link` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `name` varchar(128) NOT NULL DEFAULT '' COMMENT '名称',
+  `link` varchar(128) NOT NULL DEFAULT '' COMMENT '链接',
+  `logo` varchar(128) NOT NULL DEFAULT '' COMMENT '图标',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='友情链接';
