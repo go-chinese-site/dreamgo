@@ -30,6 +30,7 @@ type MysqlRepo struct {
 	selectArticleTagsById *sql.Stmt
 	selectArticleArchives *sql.Stmt
 	selectArticlesByTag   *sql.Stmt
+	selectFriend          *sql.Stmt
 }
 
 type articleInfo struct {
@@ -44,7 +45,16 @@ type tagInfo struct {
 	Name string `json:"name"`
 }
 
+
+type friendInfo struct {
+	Id   int64  `json:"id"`
+	Name string `json:"name"`
+	Link string `json:"link"`
+	Logo string `json:"logo"`
+}
+
 // NewMysql 创建mysql数据源实例，相当于构造方法
+
 func NewMysql(dbParams string) *MysqlRepo {
 	db, err := sql.Open("mysql", dbParams)
 	if err != nil {
@@ -59,6 +69,7 @@ func NewMysql(dbParams string) *MysqlRepo {
 		selectArticleTagsById: prepare(db, "SELECT t.`name` FROM `article_tag` at LEFT JOIN `tag` t ON at.`tag_id`=t.`id` WHERE `article_id`= ?"),
 		selectArticleArchives: prepare(db, "SELECT `id`,`title`,`pub_time` FROM `article`"),
 		selectArticlesByTag:   prepare(db, "SELECT a.`id`,a.`title`,a.`pub_time` FROM `article` a LEFT JOIN `article_tag` at ON a.`id`=at.`article_id` WHERE at.`tag_id`=?"),
+		selectFriend:          prepare(db, "SELECT `id`,`name`,`link`,`logo` FROM `friend_link`"),
 	}
 }
 
@@ -370,9 +381,21 @@ func (self *MysqlRepo) UpdateDataSource() {
 
 // GetFriends 友情链接
 func (self *MysqlRepo) GetFriends() ([]*model.Friend, error) {
-	var friends = []*model.Friend{
-		{Name: "go语言中文网", Link: "https://studygolang.com"},
+	var friends []*model.Friend
+	rows, err := self.selectFriend.Query()
+	if err != nil {
+		log.Fatalf("query friend error:%s", err)
+		return nil, err
 	}
-
+	for rows.Next() {
+		info := friendInfo{}
+		err = rows.Scan(&info.Id, &info.Name, &info.Link, &info.Logo)
+		if err != nil {
+			log.Println("scan error", err)
+			return nil, err
+		}
+		// post.Content, err = replaceCodeParts(blackfriday.MarkdownCommon([]byte(post.Content)))
+		friends = append(friends, &model.Friend{Name: info.Name, Link: info.Link, Logo: info.Logo})
+	}
 	return friends, nil
 }
