@@ -30,7 +30,7 @@ type MysqlRepo struct {
 	selectArticleTagsById *sql.Stmt
 	selectArticleArchives *sql.Stmt
 	selectArticlesByTag   *sql.Stmt
-	selectFriend          *sql.Stmt
+	selectFriends         *sql.Stmt
 }
 
 type articleInfo struct {
@@ -67,7 +67,7 @@ func NewMysql(dbParams string) *MysqlRepo {
 		selectArticleTagsById: prepare(db, "SELECT t.`name` FROM `article_tag` at LEFT JOIN `tag` t ON at.`tag_id`=t.`id` WHERE `article_id`= ?"),
 		selectArticleArchives: prepare(db, "SELECT `id`,`title`,`pub_time` FROM `article`"),
 		selectArticlesByTag:   prepare(db, "SELECT a.`id`,a.`title`,a.`pub_time` FROM `article` a LEFT JOIN `article_tag` at ON a.`id`=at.`article_id` WHERE at.`tag_id`=?"),
-		selectFriend:          prepare(db, "SELECT `id`,`name`,`link`,`logo` FROM `friend_link`"),
+		selectFriends:         prepare(db, "SELECT * FROM `friend_link`"),
 	}
 }
 
@@ -353,6 +353,31 @@ func (self *MysqlRepo) genOnePost(info articleInfo) *model.Post {
 	}
 }
 
+// GenFriendsYaml 生成友情链接数据文件friends.yaml
+func (self *MysqlRepo) GenFriendsYaml() {
+	rows, err := self.selectFriends.Query()
+	if err != nil {
+		log.Fatalf("query friend error:%s", err)
+	}
+	var friends []*model.Friend
+	for rows.Next() {
+		info := friendInfo{}
+		err = rows.Scan(&info.Id, &info.Name, &info.Link, &info.Logo)
+		if err != nil {
+			log.Println("scan error", err)
+		}
+		// post.Content, err = replaceCodeParts(blackfriday.MarkdownCommon([]byte(post.Content)))
+		friends = append(friends, &model.Friend{Name: info.Name, Link: info.Link, Logo: info.Logo})
+	}
+	buf, err := yaml.Marshal(friends)
+	if err != nil {
+		log.Printf("gen friends yaml error:%v\n", err)
+		return
+	}
+	friendsYaml := global.App.ProjectRoot + PostDir + FriendFile
+	ioutil.WriteFile(friendsYaml, buf, 0777)
+}
+
 // UpdateDataSource 更新mysql数据
 func (self *MysqlRepo) UpdateDataSource() {
 	// 检查文章目录(data/post/)是否存在，不存在则连接mysql生成
@@ -366,6 +391,7 @@ func (self *MysqlRepo) UpdateDataSource() {
 	self.GenIndexYaml()
 	self.GenArchiveYaml()
 	self.GenTagsYaml()
+	self.GenFriendsYaml()
 
 	// 定时每天自动更新仓库，并生成首页、归档、标签数据
 	c := cron.New()
@@ -373,27 +399,23 @@ func (self *MysqlRepo) UpdateDataSource() {
 		self.GenIndexYaml()
 		self.GenArchiveYaml()
 		self.GenTagsYaml()
+		self.GenFriendsYaml()
 	})
 	c.Start()
 }
 
 // GetFriends 友情链接
 func (self *MysqlRepo) GetFriends() ([]*model.Friend, error) {
-	var friends []*model.Friend
-	rows, err := self.selectFriend.Query()
+	// 从friends.yaml 中读取友情链接内容
+	in, err := ioutil.ReadFile(global.App.ProjectRoot + PostDir + FriendFile)
 	if err != nil {
-		log.Fatalf("query friend error:%s", err)
-		return nil, err
+		return nil, errors.Wrap(err, "read friends.yaml error")
 	}
-	for rows.Next() {
-		info := friendInfo{}
-		err = rows.Scan(&info.Id, &info.Name, &info.Link, &info.Logo)
-		if err != nil {
-			log.Println("scan error", err)
-			return nil, err
-		}
-		// post.Content, err = replaceCodeParts(blackfriday.MarkdownCommon([]byte(post.Content)))
-		friends = append(friends, &model.Friend{Name: info.Name, Link: info.Link, Logo: info.Logo})
+
+	friends := make([]*model.Friend, 0)
+	err = yaml.Unmarshal(in, &friends)
+	if err != nil {
+		return nil, errors.Wrap(err, "Unmarshal friends.yaml error")
 	}
 	return friends, nil
 }
