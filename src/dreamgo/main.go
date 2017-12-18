@@ -44,7 +44,6 @@ func main() {
 		config.Parse(global.App.ProjectRoot + configFile)
 	}
 	datasource.Init()
-	go updateGitDataSource()
 	// 设置模板目录，默认为default
 	global.App.SetTemplateDir(config.YamlConfig.MustValue("theme", "default"))
 	// 从配置文件中获取监听IP和端口

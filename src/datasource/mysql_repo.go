@@ -45,7 +45,6 @@ type tagInfo struct {
 	Name string `json:"name"`
 }
 
-
 type friendInfo struct {
 	Id   int64  `json:"id"`
 	Name string `json:"name"`
@@ -54,7 +53,6 @@ type friendInfo struct {
 }
 
 // NewMysql 创建mysql数据源实例，相当于构造方法
-
 func NewMysql(dbParams string) *MysqlRepo {
 	db, err := sql.Open("mysql", dbParams)
 	if err != nil {

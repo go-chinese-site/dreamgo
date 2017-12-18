@@ -7,6 +7,7 @@
 package datasource
 
 import (
+	"config"
 	"global"
 	"io/ioutil"
 	"log"
@@ -21,6 +22,7 @@ import (
 	"util"
 
 	"github.com/pkg/errors"
+	"github.com/robfig/cron"
 	"github.com/russross/blackfriday"
 	yaml "gopkg.in/yaml.v2"
 )
@@ -30,20 +32,17 @@ const (
 	PostDir = "data/post/"
 
 	// IndexFile 首页数据文件
-	IndexFile   = "index.yaml"
+	IndexFile = "index.yaml"
 	// ArchiveFile 归档数据文件
 	ArchiveFile = "archive.yaml"
 	// TagsFile 标签数据文件
-	TagsFile    = "tags.yaml"
+	TagsFile = "tags.yaml"
 	// FriendFile 友情链接数据文件
-	FriendFile  = "friends.yaml"
+	FriendFile = "friends.yaml"
 )
 
 // GithubRepo git数据源结构体
 type GithubRepo struct{}
-
-// DefaultGithub git数据源结构体实例
-var DefaultGithub = NewGithub()
 
 // NewGithub 创建git数据源实例，相当于构造方法
 func NewGithub() *GithubRepo {
@@ -376,6 +375,56 @@ func (self GithubRepo) AboutPost() (*model.Post, error) {
 		Meta:    meta,
 	}
 	return post, nil
+}
+
+// UpdateDataSource 更新数据
+func (self GithubRepo) UpdateDataSource() {
+	// 检查文章目录(data/post/)是否存在,不存在则克隆远程仓库
+	gitRepoDir := global.App.ProjectRoot + PostDir
+	if !util.Exist(gitRepoDir) {
+		if err := os.MkdirAll(gitRepoDir, os.ModePerm); err != nil {
+			panic(err)
+		}
+
+		self.cloneRepo(gitRepoDir)
+	}
+
+	gitFolder := gitRepoDir + ".git"
+	for {
+		if util.Exist(gitFolder) {
+			break
+		}
+
+		self.cloneRepo(gitRepoDir)
+	}
+	// 解析仓库文件，生成首页、归档、标签数据
+	self.GenIndexYaml()
+	self.GenArchiveYaml()
+	self.GenTagsYaml()
+
+	// 定时每天自动更新仓库，并生成首页、归档、标签数据
+	c := cron.New()
+	c.AddFunc("@daily", func() {
+		self.Pull(gitRepoDir)
+		self.GenIndexYaml()
+		self.GenArchiveYaml()
+		self.GenTagsYaml()
+	})
+	c.Start()
+}
+
+// 使用git clone命令克隆文章仓库
+func (self GithubRepo) cloneRepo(gitRepoDir string) {
+	cmdName := "git"
+	pullArgs := []string{"clone", config.YamlConfig.Get("datasource.url").String(), "."}
+
+	cmd := exec.Command(cmdName, pullArgs...)
+	cmd.Dir = gitRepoDir
+
+	if err := cmd.Run(); err != nil {
+		log.Printf("error clone master at %s: %v", gitRepoDir, err)
+		return
+	}
 }
 
 // GetFriends 友情链接

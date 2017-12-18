@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.7.13, for osx10.11 (x86_64)
 --
--- Host: ec2-13-229-128-253.ap-southeast-1.compute.amazonaws.com    Database: dreamgo
+-- Host: 13.229.128.253    Database: dreamgo
 -- ------------------------------------------------------
 -- Server version	5.7.20
 
@@ -37,20 +37,7 @@ CREATE TABLE `article` (
 
 LOCK TABLES `article` WRITE;
 /*!40000 ALTER TABLE `article` DISABLE KEYS */;
-INSERT INTO `article` VALUES (1,'关于 DreamGo',1506694800,'# 关于 DreamGO
-
-DreamGo 是一个新手学习用的博客系统。计划实现三个版本：
-
-1. 不使用框架，基于标准库 `net/http` 实现；
-2. 使用第三方路由，比如 https://github.com/gorilla/mux 或 https://github.com/julienschmidt/httprouter 实现；
-3. 使用一个 Web 框架，可能考虑使用 Beego，因为国内貌似用这个的比较多，满足广大 gopher 的要求；
-
-数据源计划支持三种方式，尽可能让大家练习使用 Go 语言操作常用的存储：
-
-1. 将文章存在 Github Repo 上；
-2. 将文章存入 MySQL 中；
-3. 将文字存入 MongoDB 中；
-');
+INSERT INTO `article` VALUES (1,'关于 DreamGo',1506694800,'# 关于 DreamGO\n\nDreamGo 是一个新手学习用的博客系统。计划实现三个版本：\n\n1. 不使用框架，基于标准库 `net/http` 实现；\n2. 使用第三方路由，比如 https://github.com/gorilla/mux 或 https://github.com/julienschmidt/httprouter 实现；\n3. 使用一个 Web 框架，可能考虑使用 Beego，因为国内貌似用这个的比较多，满足广大 gopher 的要求；\n\n数据源计划支持三种方式，尽可能让大家练习使用 Go 语言操作常用的存储：\n\n1. 将文章存在 Github Repo 上；\n2. 将文章存入 MySQL 中；\n3. 将文字存入 MongoDB 中；\n');
 /*!40000 ALTER TABLE `article` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -102,6 +89,32 @@ INSERT INTO `db_version` VALUES (2017101301);
 UNLOCK TABLES;
 
 --
+-- Table structure for table `friend_link`
+--
+
+DROP TABLE IF EXISTS `friend_link`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `friend_link` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `name` varchar(128) NOT NULL DEFAULT '' COMMENT '名称',
+  `link` varchar(128) NOT NULL DEFAULT '' COMMENT '链接',
+  `logo` varchar(128) NOT NULL DEFAULT '' COMMENT '图标',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='友情链接';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `friend_link`
+--
+
+LOCK TABLES `friend_link` WRITE;
+/*!40000 ALTER TABLE `friend_link` DISABLE KEYS */;
+INSERT INTO `friend_link` VALUES (1,'Go语言中文网','https://studygolang.com','https://static.studygolang.com/img/favicon.ico');
+/*!40000 ALTER TABLE `friend_link` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `tag`
 --
 
@@ -134,17 +147,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-10-27 22:56:40
-
---
--- Table structure for table `friend_link`
---
-
-DROP TABLE IF EXISTS `friend_link`;
-CREATE TABLE `friend_link` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `name` varchar(128) NOT NULL DEFAULT '' COMMENT '名称',
-  `link` varchar(128) NOT NULL DEFAULT '' COMMENT '链接',
-  `logo` varchar(128) NOT NULL DEFAULT '' COMMENT '图标',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='友情链接';
+-- Dump completed on 2017-12-18 10:54:12

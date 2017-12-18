@@ -33,6 +33,7 @@ type DataSourcer interface {
 	TagList() []*model.Tag
 	FindTag(tagName string) *model.Tag
 	AboutPost() (*model.Post, error)
+	UpdateDataSource()
 	GetFriends() ([]*model.Friend, error)
 }
 
@@ -50,10 +51,10 @@ func Init() {
 		DefaultDataSourcer = NewMongoDB()
 	case "mysql":
 		DefaultDataSourcer = NewMysql(config.YamlConfig.Get("datasource.mysqlAddr").String())
-		go DefaultDataSourcer.(*MysqlRepo).UpdateDataSource()
 	default:
 		DefaultDataSourcer = NewGithub()
 	}
+	go DefaultDataSourcer.UpdateDataSource()
 }
 
 func replaceCodeParts(htmlFile []byte) (string, error) {

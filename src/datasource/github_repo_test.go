@@ -15,26 +15,30 @@ import (
 	"testing"
 )
 
+// DefaultGithub git数据源结构体实例
+var DefaultGithub *datasource.GithubRepo
+
 func setup() {
 	cwd, _ := os.Getwd()
 	pos := strings.LastIndex(cwd, "src")
 	global.App.ProjectRoot = cwd[:pos]
+	DefaultGithub = datasource.NewGithub()
 }
 
 func TestGenIndexYaml(t *testing.T) {
 	setup()
 
-	datasource.DefaultGithub.GenIndexYaml()
+	DefaultGithub.GenIndexYaml()
 }
 
 func TestGenArchiveYaml(t *testing.T) {
 	setup()
 
-	datasource.DefaultGithub.GenArchiveYaml()
+	DefaultGithub.GenArchiveYaml()
 }
 
 func TestGenTagsYaml(t *testing.T) {
 	setup()
 
-	datasource.DefaultGithub.GenTagsYaml()
+	DefaultGithub.GenTagsYaml()
 }

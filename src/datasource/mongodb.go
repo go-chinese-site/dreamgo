@@ -223,6 +223,10 @@ func (self MongoDB) AboutPost() (*model.Post, error) {
 	return post, nil
 }
 
+// UpdateDataSource 更新数据
+func (self MongoDB) UpdateDataSource() {
+}
+
 // GetFriends 友情链接
 func (self MongoDB) GetFriends() ([]*model.Friend, error) {
 	var friends = []*model.Friend{
