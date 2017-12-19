@@ -8,13 +8,13 @@ import (
 	"view"
 )
 
-type FriendsConteoller struct{}
+type FriendsController struct{}
 
-func (self FriendsConteoller) RegisterRoutes() {
+func (self FriendsController) RegisterRoutes() {
 	route.HandleFunc("/friends", self.Detail)
 }
 
-func (FriendsConteoller) Detail(w http.ResponseWriter, r *http.Request) {
+func (FriendsController) Detail(w http.ResponseWriter, r *http.Request) {
 	friends, err := datasource.DefaultDataSourcer.GetFriends()
 	if err == nil {
 		view.Render(w, r, "friends.html", map[string]interface{}{"friends": friends})
