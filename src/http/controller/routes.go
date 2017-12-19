@@ -14,5 +14,5 @@ func RegisterRoutes() {
 	new(TagController).RegisterRoute()      // 注册标签相关路由
 	new(AboutController).RegisterRoutes()   // 注册关于页面路由
 	new(StaticController).RegisterRoutes()  // 注册静态文件路由
-	new(FriendsConteoller).RegisterRoutes() // 注册友联相关路由
+	new(FriendsController).RegisterRoutes() // 注册友联相关路由
 }
