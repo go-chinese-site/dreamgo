@@ -118,7 +118,8 @@ func (self *MysqlRepo) ServeMarkdown(w http.ResponseWriter, r *http.Request, fil
 func (self *MysqlRepo) FindPost(path string) (*model.Post, error) {
 	id, err := strconv.Atoi(path)
 	if err != nil {
-		log.Fatalf("Invalid path :%s", err)
+		log.Printf("Invalid path :%s\n", err)
+		return nil, fmt.Errorf("文章不存在")
 	}
 	row := self.selectArticleById.QueryRow(id)
 	info := articleInfo{}
@@ -127,7 +128,8 @@ func (self *MysqlRepo) FindPost(path string) (*model.Post, error) {
 	post := self.genOnePost(info)
 	rows, err := self.selectArticleTagsById.Query(info.Id)
 	if err != nil {
-		log.Fatalf("Query article tags error:%s", err)
+		log.Printf("Query article tags error:%s", err)
+		return nil, fmt.Errorf("文章不存在")
 	}
 	var tags []string
 	for rows.Next() {
