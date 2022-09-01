@@ -1,9 +1,9 @@
 package controller
 
 import (
-	"global"
+	"github.com/go-chinese-site/dreamgo/global"
+	"github.com/go-chinese-site/dreamgo/route"
 	"net/http"
-	"route"
 	"strings"
 )
 

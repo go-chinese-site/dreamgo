@@ -7,11 +7,12 @@
 package datasource
 
 import (
-	"config"
-	"global"
+	"github.com/go-chinese-site/dreamgo/config"
+	"github.com/go-chinese-site/dreamgo/global"
+	"github.com/go-chinese-site/dreamgo/model"
+	"github.com/go-chinese-site/dreamgo/util"
 	"io/ioutil"
 	"log"
-	"model"
 	"net/http"
 	"os"
 	"os/exec"
@@ -19,7 +20,6 @@ import (
 	"sort"
 	"strings"
 	"time"
-	"util"
 
 	"github.com/pkg/errors"
 	"github.com/robfig/cron"

@@ -7,16 +7,16 @@
 package main
 
 import (
-	"config"
-	"datasource"
 	"flag"
-	"global"
-	"http/controller"
+	"github.com/go-chinese-site/dreamgo/config"
+	"github.com/go-chinese-site/dreamgo/datasource"
+	"github.com/go-chinese-site/dreamgo/global"
+	"github.com/go-chinese-site/dreamgo/http/controller"
+	"github.com/go-chinese-site/dreamgo/logger"
+	"github.com/go-chinese-site/dreamgo/route"
 	"log"
-	"logger"
 	"math/rand"
 	"net/http"
-	"route"
 	"strings"
 	"time"
 )
@@ -26,7 +26,7 @@ var configFile string
 func init() {
 	rand.Seed(time.Now().Unix())
 
-	flag.StringVar(&configFile, "config", "config/env.yml", "The config file. Default is $ProjectRoot/config/env.yml")
+	flag.StringVar(&configFile, "conf", "conf/env.yml", "The conf file. Default is $ProjectRoot/conf/env.yml")
 }
 
 func main() {

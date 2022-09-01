@@ -3,22 +3,22 @@ package datasource
 import (
 	"database/sql"
 	"fmt"
-	"global"
+	"github.com/go-chinese-site/dreamgo/global"
+	"github.com/go-chinese-site/dreamgo/model"
+	"github.com/go-chinese-site/dreamgo/util"
+	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"log"
-	"model"
 	"net/http"
 	"os"
 	"sort"
 	"strconv"
 	"time"
-	"util"
 
 	_ "github.com/go-sql-driver/mysql" // data source
 	"github.com/pkg/errors"
 	"github.com/robfig/cron"
 	"github.com/russross/blackfriday"
-	"gopkg.in/yaml.v2"
 )
 
 // MysqlRepo mysql 数据源结构体

@@ -10,7 +10,7 @@ import (
 	"github.com/go-chinese-site/cfg"
 )
 
-// YamlConfig stores the config content
+// YamlConfig stores the conf content
 var YamlConfig *cfg.YamlConfig
 
 // Parse parses the configFile into YamlConfig

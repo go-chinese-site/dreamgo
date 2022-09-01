@@ -1,15 +1,15 @@
 package datasource
 
 import (
-	"config"
+	"github.com/go-chinese-site/dreamgo/config"
+	"github.com/go-chinese-site/dreamgo/model"
 	"log"
-	"model"
 	"net/http"
 	"sort"
 	"time"
 
 	"github.com/russross/blackfriday"
-	"gopkg.in/mgo.v2"
+	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
 

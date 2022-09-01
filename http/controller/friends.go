@@ -1,11 +1,11 @@
 package controller
 
 import (
-	"datasource"
-	"logger"
+	"github.com/go-chinese-site/dreamgo/datasource"
+	"github.com/go-chinese-site/dreamgo/logger"
+	"github.com/go-chinese-site/dreamgo/route"
+	"github.com/go-chinese-site/dreamgo/view"
 	"net/http"
-	"route"
-	"view"
 )
 
 type FriendsController struct{}

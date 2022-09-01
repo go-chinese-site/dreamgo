@@ -17,7 +17,7 @@ if ERRORLEVEL 1 (
 
 
 :reload
-call install.bat
+call build.bat
 if exist bin\dreamgo.exe (
     echo .........rebuild success.........
     goto run

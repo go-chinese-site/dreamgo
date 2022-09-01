@@ -9,7 +9,7 @@ fi
 
 ps -ef|grep dreamgo |grep -v grep
 if [ $? -ne 0 ];then
-    source ./install.sh
+    source build.sh
     if [ ! -f bin/dreamgo ];then
      echo .........the command install fail.........
      exit 1
@@ -22,7 +22,7 @@ if [ $? -ne 0 ];then
 else
     echo .........run kill exist process.........
     ps -ef|grep dreamgo |grep -v grep |awk '{print $2}' |xargs kill -9 >/dev/null 2>&1
-     source ./install.sh
+     source build.sh
     if [ ! -f bin/dreamgo ];then
      echo .........the command install fail.........
      exit 1

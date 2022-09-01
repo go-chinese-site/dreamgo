@@ -1,13 +1,11 @@
 FROM golang
 
-RUN go get github.com/polaris1119/gvt
-RUN ln -sf /go/bin/gvt /usr/local/bin/
 ADD . /dreamgo
-
+ENV GO111MODULE=on
+ENV GOPROXY=https://goproxy.cn
 # install dreamgo
 WORKDIR /dreamgo
-RUN ./getpkg.sh
-RUN ./install.sh
+RUN ./build.sh
 EXPOSE 2017
 
 ENTRYPOINT [ "./bin/dreamgo" ]

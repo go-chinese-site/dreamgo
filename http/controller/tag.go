@@ -7,13 +7,13 @@
 package controller
 
 import (
-	"datasource"
+	"github.com/go-chinese-site/dreamgo/datasource"
+	"github.com/go-chinese-site/dreamgo/route"
+	"github.com/go-chinese-site/dreamgo/view"
 	"net/http"
 	"net/url"
 	"path/filepath"
-	"route"
 	"sort"
-	"view"
 )
 
 type TagController struct{}

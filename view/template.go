@@ -7,12 +7,11 @@
 package view
 
 import (
-	"config"
+	"github.com/go-chinese-site/dreamgo/config"
+	"github.com/go-chinese-site/dreamgo/global"
 	"html/template"
 	"net/http"
 	"time"
-
-	"global"
 )
 
 // funcMap is the customize template functions

@@ -8,10 +8,8 @@ go:
 sudo: false
 
 install:
-  - export GOPATH=$HOME/gopath/src/github.com/go-chinese-site/dreamgo
-  - export PATH=$PATH:$HOME/gopath/src/github.com/go-chinese-site/dreamgo/bin/
-  - go get -v github.com/FiloSottile/gvt
+  - export GO111MODULE=on
+  - export GOPROXY=https://goproxy.cn
 
 script:
-  - sh getpkg.sh
-  - sh install.sh
+  - sh build.sh

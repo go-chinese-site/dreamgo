@@ -87,6 +87,8 @@ func (this *app) Uptime() time.Duration {
 func (this *app) setProjectRoot() {
 	curFilename := os.Args[0]
 
+	os.Getwd()
+
 	binaryPath, err := exec.LookPath(curFilename)
 	if err != nil {
 		panic(err)
@@ -97,7 +99,7 @@ func (this *app) setProjectRoot() {
 		panic(err)
 	}
 
-	projectRoot := filepath.Dir(filepath.Dir(binaryPath))
+	projectRoot := filepath.Dir(binaryPath)
 
 	this.ProjectRoot = projectRoot + "/"
 }

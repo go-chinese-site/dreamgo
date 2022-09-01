@@ -8,8 +8,8 @@ package datasource
 
 import (
 	"bytes"
-	"config"
-	"model"
+	"github.com/go-chinese-site/dreamgo/config"
+	"github.com/go-chinese-site/dreamgo/model"
 	"net/http"
 	"strings"
 

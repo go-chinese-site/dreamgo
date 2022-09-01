@@ -7,10 +7,10 @@ import (
 	"path"
 	"time"
 
-	"global"
+	"github.com/go-chinese-site/dreamgo/global"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
-	"gopkg.in/natefinch/lumberjack.v2"
+	lumberjack "gopkg.in/natefinch/lumberjack.v2"
 )
 
 var instance *zap.Logger

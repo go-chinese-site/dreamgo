@@ -7,10 +7,10 @@
 package controller
 
 import (
-	"datasource"
+	"github.com/go-chinese-site/dreamgo/datasource"
+	"github.com/go-chinese-site/dreamgo/route"
+	"github.com/go-chinese-site/dreamgo/view"
 	"net/http"
-	"route"
-	"view"
 )
 
 var defaults = map[string]bool{

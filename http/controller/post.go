@@ -7,14 +7,14 @@
 package controller
 
 import (
+	"github.com/go-chinese-site/dreamgo/route"
 	"net/http"
 	"path/filepath"
-	"route"
 	"strings"
 
-	"datasource"
-	"util"
-	"view"
+	"github.com/go-chinese-site/dreamgo/datasource"
+	"github.com/go-chinese-site/dreamgo/util"
+	"github.com/go-chinese-site/dreamgo/view"
 )
 
 type PostController struct{}
