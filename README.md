@@ -53,15 +53,14 @@
 
 ## Install
 
-要求：Go 1.8 及以上
+要求：Go 1.13 及以上
 
 **注：如果你是 Windows，请将 `.sh` 的脚本改为 `.bat`**
 
-1. 本项目使用 `gvt` 作为依赖管理工具，通过 `go get github.com/polaris1119/gvt` 安装，并将 gvt 放入 PATH 中；
+1. 本项目使用 go module 方式管理依赖；
 2. 下载 dreamgo 源码：`git clone https://github.com/go-chinese-site/dreamgo`，比如下载到 ~/dreamgo 中；
-3. cd ~/dreamgo，执行 ./getpkg.sh；
-4. 执行 ./install.sh
-5. 启动 dreamgo：bin/dreamgo 或 执行 ./run.sh
+3. 构建项目，执行 cd ~/dreamgo，执行 ./build.sh；
+4. 启动 dreamgo：bin/dreamgo 或 执行 ./run.sh
 
 通过浏览器访问：http://localhost:2017
 
